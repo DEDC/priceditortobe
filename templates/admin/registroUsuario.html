@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registro Usuario</title>
+</head>
+<body>
+    <main>
+        <h1>Registro Usuarios</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{fRU.as_p}}
+            <p>
+                <label for="chk_cliente">Cliente</label>
+                <input type="checkbox" name="is_cliente" id="chk_cliente">
+            </p>
+            <input type="submit" value="Guardar">
+        </form>
+    </main>
+</body>
+</html>
