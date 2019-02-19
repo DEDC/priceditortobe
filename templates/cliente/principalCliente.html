@@ -1,14 +1,42 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <title>Principal Cliente</title>
+    <style>
+        ul[data-display='hide']{display: none !important;}
+        ul[data-display='show']{display: block !important;}
+        .container{margin-top: 100px;}
+        button{animation-delay: 0.7s;}
+        .input-field{animation-delay: 0.3s}
+    </style>
 </head>
 <body>
     <main>
-        <h1>Principal Cliente</h1>
+        <div class="container">
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field col offset-l3 l6 animated fadeIn faster">
+                    <input type="text" id="search" class="autocomplete" autocomplete="off">
+                    <label for="search">Escriba el nombre del producto</label>
+                </div>
+            </div>
+            <div class="row">
+                <div id="cont-result" class="col offset-l3 l6">
+                    <ul class="collection" data-display="hide"></ul>
+                    <br>
+                    <button class="btn right animated fadeIn" id="next">Siguiente</button>
+                </div>
+            </div>
+        </div>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'js/jq.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

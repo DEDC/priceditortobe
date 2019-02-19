@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.core import serializers
 from .forms import fRegistroCategoria, fRegistroProducto, fRegistroImagen
+from .models import Productos
 
 def vRegistroCategoria(request):
     if request.method == 'POST':
@@ -27,3 +30,10 @@ def vRegistroProducto(request):
     context = {'fRP' : fRP, 'fRI' : fRI}
     return render(request, 'admin/registroProducto.html', context)
 
+def getProductos(request):
+    if request.is_ajax():
+        texto = request.POST.get('texto')
+        productos = serializers.serialize('json', Productos.objects.filter(nombre__istartswith = texto), fields = ('nombre'))
+        return HttpResponse(productos, content_type = 'application/json')
+    else:
+        return redirect('login')
