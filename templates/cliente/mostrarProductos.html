@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <title>Document</title>
+    <style>
+        .container{margin-top: 100px;}
+        .row{margin-bottom: 60px !important;}
+        canvas{width: 100%;}
+        .img-hide{display: none;}
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            {% for p in productos %}
+            <div class="row">
+                <h5>{{ p.nombre }}</h5>
+                <div class="divider"></div>
+                <br>
+                <div class="col l8">
+                    <img src="{% get_static_prefix %}images/{{p.imagen.imagen}}" class="img-hide">
+                    <canvas id="{{p.id}}" data-id="{{p.id}}"></canvas>
+                </div>
+                <div class="col l4">
+                    <div class="input-field">
+                        <input type="number" id="precio-{{p.id}}" class="precio" data-id="{{p.id}}">
+                        <label for="precio-{{p.id}}">Precio</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" id="medida-{{p.id}}" class="medida" data-id="{{p.id}}">
+                        <label for="medida-{{p.id}}">Unidad de medida</label>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        window.onload = function(){
+            initCanvas();
+        };
+    </script>
+</body>
+</html>

@@ -12,14 +12,13 @@
         ul[data-display='hide']{display: none !important;}
         ul[data-display='show']{display: block !important;}
         .container{margin-top: 100px;}
-        button{animation-delay: 0.7s;}
+        #next{animation-delay: 0.7s;}
         .input-field{animation-delay: 0.3s}
     </style>
 </head>
 <body>
     <main>
         <div class="container">
-            {% csrf_token %}
             <div class="row">
                 <div class="input-field col offset-l3 l6 animated fadeIn faster">
                     <input type="text" id="search" class="autocomplete" autocomplete="off">
@@ -27,16 +26,25 @@
                 </div>
             </div>
             <div class="row">
-                <div id="cont-result" class="col offset-l3 l6">
-                    <ul class="collection" data-display="hide"></ul>
-                    <br>
-                    <button class="btn right animated fadeIn" id="next">Siguiente</button>
-                </div>
+                <form action="{% url 'usuarios:show-producto' %}" method="post">
+                    {% csrf_token %}
+                    <div id="cont-result" class="col offset-l3 l6">
+                        <ul class="collection" data-display="hide"></ul>
+                        <br>
+                        <input type="button" value="Siguiente" class="btn right animated fadeIn" id="next">
+                    </div>
+                </form>
             </div>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="{% static 'js/jq.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            initSearch();
+        });
+    </script>
 </body>
 </html>

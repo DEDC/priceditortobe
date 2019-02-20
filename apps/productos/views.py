@@ -37,3 +37,14 @@ def getProductos(request):
         return HttpResponse(productos, content_type = 'application/json')
     else:
         return redirect('login')
+
+def showProductos(request):
+    productos = []
+    if request.method == 'POST':
+        if request.POST.__contains__('chkb'):
+            for p in request.POST.getlist('chkb'):
+                if Productos.objects.filter(id__exact = p).exists():
+                    producto = Productos.objects.get(id__exact = p)
+                    productos.append(producto)
+    context = {'productos' : productos}
+    return render(request, 'cliente/mostrarProductos.html', context)
