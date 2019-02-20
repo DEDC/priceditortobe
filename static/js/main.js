@@ -101,10 +101,12 @@ function initCanvas(){
         }
         var price_input = document.querySelectorAll(".precio");
         var medida_input = document.querySelectorAll(".medida");
+        var btn_precio = document.querySelectorAll(".btn-precio");
+        var btn_medida = document.querySelectorAll(".btn-medida");
         if(price_input){
             price_input.forEach(element => {
                 element.addEventListener('input', function(){
-                    drawPrice(this);
+                    drawPrice(this.getAttribute('data-id'));
                 });
             });
         }
@@ -115,20 +117,66 @@ function initCanvas(){
                 });
             });
         }
+        if(btn_precio && btn_medida){
+            btn_precio.forEach(element => {
+                element.addEventListener('click', function(){
+                    drawMove(this);
+                });    
+            });
+            btn_medida.forEach(element => {
+                element.addEventListener('click', function(){
+                    drawMove(this);
+                });    
+            });
+        }
     }
 }
 
-function drawPrice(e){
-    var canvas = document.querySelector("canvas[data-id='"+e.getAttribute('data-id')+"']");
+function drawPrice(data_id){
+    var canvas = document.querySelector("canvas[data-id='"+data_id+"']");
+    var input_price = document.querySelector(".precio[data-id='"+data_id+"']");
+    var input_medida = document.querySelector(".medida[data-id='"+data_id+"']");
+    var img = canvas.previousElementSibling;
     var context = canvas.getContext("2d");
-    console.log(context);
-    // context.fillText();
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
     context.font = "40pt Calibri";
-    context.fillText(e.value, 400, 200);
+    context.fillText(input_price.value, input_price.getAttribute('data-x'), input_price.getAttribute('data-y'));
 }
 
 function drawMedida(e){
+    var canvas = document.querySelector("canvas[data-id='"+e.getAttribute('data-id')+"']");
+    var img = canvas.previousElementSibling;
+    var context = canvas.getContext("2d");
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    context.font = "100pt Calibri";
+    context.fillText(e.value, 400, 500);
+}
 
+function drawMove(e){
+    if(e){
+        var coordPrecio = e.parentElement.firstElementChild;
+        var x = parseInt(coordPrecio.getAttribute('data-x'));
+        var y = parseInt(coordPrecio.getAttribute('data-y'));
+        var cont = 10;
+        switch(e.getAttribute('data-role')){
+            case "up":
+                coordPrecio.setAttribute('data-y', y - cont);
+                drawPrice(coordPrecio.getAttribute('data-id'));
+                break;
+            case "down":
+                coordPrecio.setAttribute('data-y', y + cont);
+                drawPrice(coordPrecio.getAttribute('data-id'));
+                break;
+            case "left":
+                coordPrecio.setAttribute('data-x', x - cont);
+                drawPrice(coordPrecio.getAttribute('data-id'));
+                break;
+            case "right":
+                coordPrecio.setAttribute('data-x', x + cont);
+                drawPrice(coordPrecio.getAttribute('data-id'));
+                break;
+        }
+    }
 }
 
 function getCSRFTokenValue(){
