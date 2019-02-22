@@ -5,52 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <title>Document</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <title>Productos seleccionados</title>
     <style>
-        .container{margin-top: 100px;}
-        .row{margin-bottom: 60px !important;}
-        canvas{width: 100%;}
-        .img-hide{display: none;}
+        /* Type-1 css styles */
+        .type-1 > .cont-item > .cont-canvas > .cont-img{
+            width: 1200px;
+            height: 1200px;
+            display: inline-block;
+        }
+        .type-1 > .cont-item > .cont-canvas{
+            display: flex;
+            justify-content: center;
+        }
+        .type-1 > .cont-item > .cont-canvas > .cont-img > img{
+            margin-right: auto;
+            margin-left: auto;
+            display: block;
+        }
+        .type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text{
+            position: absolute;
+            width: inherit;
+            height: 100px;
+            margin-top: 230px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+        .type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text > .text-precio{     
+            font-size: 4em;
+            font-weight: bold;
+        }
+        .type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text > .text-medida{     
+            font-size: 2em;
+            font-weight: bold;
+        }
+        /* End styles type-1 */
+
+        /* Type-2 css styles */
+        /* End styles type-2 */
     </style>
 </head>
 <body>
-    <main>
-        <div class="container">
-            {% for p in productos %}
-            <div class="row">
-                <h5>{{ p.nombre }}</h5>
-                <div class="divider"></div>
-                <br>
-                <div class="col l8">
-                    <img src="{% get_static_prefix %}images/{{p.imagen.imagen}}" class="img-hide">
-                    <canvas data-id="{{p.id}}"></canvas>
-                </div>
-                <div class="col l4">
-                    <div class="input-field">
-                        <input type="number" class="precio" data-id="{{p.id}}" data-x="400", data-y="500">
-                        <label for="precio-{{p.id}}">Precio</label>
-                        <button class="btn btn-precio" data-role="up" data-id="{{p.id}}"><i class="fas fa-arrow-up"></i></button>
-                        <button class="btn btn-precio" data-role="down" data-id="{{p.id}}"><i class="fas fa-arrow-down"></i></button>
-                        <button class="btn btn-precio" data-role="left" data-id="{{p.id}}"><i class="fas fa-arrow-left"></i></button>
-                        <button class="btn btn-precio" data-role="right" data-id="{{p.id}}"><i class="fas fa-arrow-right"></i></button>
-                    </div>
-                    <br>
-                    <div class="input-field">
-                        <input type="text" class="medida" data-id="{{p.id}}" data-x="400", data-y="500">
-                        <label for="medida-{{p.id}}">Unidad de medida</label>
-                        <button class="btn btn-medida" data-role="up"><i class="fas fa-arrow-up"></i></button>
-                        <button class="btn btn-medida" data-role="down"><i class="fas fa-arrow-down"></i></button>
-                        <button class="btn btn-medida" data-role="left"><i class="fas fa-arrow-left"></i></button>
-                        <button class="btn btn-medida" data-role="right"><i class="fas fa-arrow-right"></i></button>
+    <main> 
+        {% for p in productos %}
+        <div class="type-1">
+            <button id="prueba" >frger</button>
+            <div class="cont-item">
+                <h2>{{ p.nombre }}</h2>
+                <label for="precio-{{p.id}}">Precio</label>
+                <input type="text" class="precio" data-id="{{p.id}}">
+                <label for="medida-{{p.id}}">Unidad de medida</label>
+                <input type="text" class="medida" data-id="{{p.id}}">
+                <div class="cont-canvas">
+                    <div class="cont-img">
+                        <div class="cont-text">
+                            <span class="text-precio" data-id="{{p.id}}"></span>
+                            <span class="text-medida" data-id="{{p.id}}"></span>
+                        </div>
+                        <img src="{% get_static_prefix %}images/{{p.imagen.imagen}}">
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <script src="{% static 'js/jszip.min.js' %}"></script>
+    <script src="{% static 'js/filesaver.js' %}"></script>
+    <script src="{% static 'js/html2canvas.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script>
         window.onload = function(){

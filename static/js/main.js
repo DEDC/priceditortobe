@@ -88,94 +88,60 @@ function clean(){
 }
 
 function initCanvas(){
-    var images = document.getElementsByTagName('img');
-    if(images.length){
-        for(i = 0; i < images.length; i++){
-            var canvas = images[i].nextElementSibling;
-            if(canvas){
-                canvas.height = images[i].height;
-                canvas.width = images[i].width;
-                var context = canvas.getContext("2d");
-                context.drawImage(images[i], 0, 0, canvas.width, canvas.height);
+    document.getElementById('prueba').addEventListener('click', function(){
+        var zip = new JSZip();
+        var cont_img = document.getElementsByClassName('cont-img')[0];
+        html2canvas(cont_img, {
+            onrendered: function(canvas) {
+                function getBase64Image(img) {
+		            var canvas = document.createElement("canvas");
+		            canvas.width = img.width;
+                    canvas.height = img.height;
+		            var ctx = canvas.getContext("2d");
+		            ctx.drawImage(img, 0, 0);
+		            var dataURL = canvas.toDataURL("image/png");
+		            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+                }
+                theCanvas = canvas;
+                var img2 = getBase64Image(canvas);
+			    zip.folder("images");
+			    var img = zip.folder("images");
+			    img.file("pantilla2.png", img2, {base64: true});
+			    zip.generateAsync({type:"blob"}).then(function(content) {
+			        saveAs(content, "plantillas.zip");
+		        });    
             }
-        }
-        var price_input = document.querySelectorAll(".precio");
-        var medida_input = document.querySelectorAll(".medida");
-        var btn_precio = document.querySelectorAll(".btn-precio");
-        var btn_medida = document.querySelectorAll(".btn-medida");
-        if(price_input){
-            price_input.forEach(element => {
-                element.addEventListener('input', function(){
-                    drawPrice(this.getAttribute('data-id'));
-                });
+        });
+    });
+    var price_input = document.querySelectorAll(".precio");
+    var medida_input = document.querySelectorAll(".medida");
+    if(price_input){
+        price_input.forEach(element => {
+            element.addEventListener('input', function(){
+                drawText(this);
             });
-        }
-        if(medida_input){
-            medida_input.forEach(element => {
-                element.addEventListener('input', function(){
-                    drawMedida(this);
-                });
+        });
+    }
+    if(medida_input){
+        medida_input.forEach(element => {
+            element.addEventListener('input', function(){
+                drawText(this);
             });
-        }
-        if(btn_precio && btn_medida){
-            btn_precio.forEach(element => {
-                element.addEventListener('click', function(){
-                    drawMove(this);
-                });    
-            });
-            btn_medida.forEach(element => {
-                element.addEventListener('click', function(){
-                    drawMove(this);
-                });    
-            });
-        }
+        });
     }
 }
 
-function drawPrice(data_id){
-    var canvas = document.querySelector("canvas[data-id='"+data_id+"']");
-    var input_price = document.querySelector(".precio[data-id='"+data_id+"']");
-    var input_medida = document.querySelector(".medida[data-id='"+data_id+"']");
-    var img = canvas.previousElementSibling;
-    var context = canvas.getContext("2d");
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
-    context.font = "40pt Calibri";
-    context.fillText(input_price.value, input_price.getAttribute('data-x'), input_price.getAttribute('data-y'));
-}
-
-function drawMedida(e){
-    var canvas = document.querySelector("canvas[data-id='"+e.getAttribute('data-id')+"']");
-    var img = canvas.previousElementSibling;
-    var context = canvas.getContext("2d");
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
-    context.font = "100pt Calibri";
-    context.fillText(e.value, 400, 500);
-}
-
-function drawMove(e){
-    if(e){
-        var coordPrecio = e.parentElement.firstElementChild;
-        var x = parseInt(coordPrecio.getAttribute('data-x'));
-        var y = parseInt(coordPrecio.getAttribute('data-y'));
-        var cont = 10;
-        switch(e.getAttribute('data-role')){
-            case "up":
-                coordPrecio.setAttribute('data-y', y - cont);
-                drawPrice(coordPrecio.getAttribute('data-id'));
-                break;
-            case "down":
-                coordPrecio.setAttribute('data-y', y + cont);
-                drawPrice(coordPrecio.getAttribute('data-id'));
-                break;
-            case "left":
-                coordPrecio.setAttribute('data-x', x - cont);
-                drawPrice(coordPrecio.getAttribute('data-id'));
-                break;
-            case "right":
-                coordPrecio.setAttribute('data-x', x + cont);
-                drawPrice(coordPrecio.getAttribute('data-id'));
-                break;
-        }
+function drawText(e){
+    var id = e.getAttribute('data-id');
+    switch (e.getAttribute('class')){
+        case 'precio':
+            var text_precio = document.querySelector(".text-precio[data-id='"+id+"']");
+            text_precio.textContent = e.value; 
+            return;
+        case 'medida':
+            var text_medida = document.querySelector(".text-medida[data-id='"+id+"']");
+            text_medida.textContent = e.value;
+            return;
     }
 }
 
