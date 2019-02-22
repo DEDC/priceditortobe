@@ -8,61 +8,22 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/type-styles.css' %}">
     <title>Productos seleccionados</title>
-    <style>
-        /* Type-1 css styles */
-        .type-1 > .cont-item > .cont-canvas > .cont-img{
-            width: 1200px;
-            height: 1200px;
-            display: inline-block;
-        }
-        .type-1 > .cont-item > .cont-canvas{
-            display: flex;
-            justify-content: center;
-        }
-        .type-1 > .cont-item > .cont-canvas > .cont-img > img{
-            margin-right: auto;
-            margin-left: auto;
-            display: block;
-        }
-        .type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text{
-            position: absolute;
-            width: inherit;
-            height: 100px;
-            margin-top: 230px;
-            display: flex;
-            justify-content: center;
-            align-items: baseline;
-            color: white;
-            font-family: 'Roboto', sans-serif;
-        }
-        .type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text > .text-precio{     
-            font-size: 4em;
-            font-weight: bold;
-        }
-        .type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text > .text-medida{     
-            font-size: 2em;
-            font-weight: bold;
-        }
-        /* End styles type-1 */
-
-        /* Type-2 css styles */
-        /* End styles type-2 */
-    </style>
 </head>
 <body>
     <main> 
+        <button id="prueba" >Descargar imágenes</button>
         {% for p in productos %}
         <div class="type-1">
-            <button id="prueba" >frger</button>
             <div class="cont-item">
-                <h2>{{ p.nombre }}</h2>
+                <h2>{{p.nombre}}</h2>
                 <label for="precio-{{p.id}}">Precio</label>
                 <input type="text" class="precio" data-id="{{p.id}}">
                 <label for="medida-{{p.id}}">Unidad de medida</label>
                 <input type="text" class="medida" data-id="{{p.id}}">
                 <div class="cont-canvas">
-                    <div class="cont-img">
+                    <div class="cont-img" id="{{p.id}}">
                         <div class="cont-text">
                             <span class="text-precio" data-id="{{p.id}}"></span>
                             <span class="text-medida" data-id="{{p.id}}"></span>

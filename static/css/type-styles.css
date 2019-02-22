@@ -1,0 +1,32 @@
+/* Type-1 css styles */
+.type-1 > .cont-item > .cont-canvas > .cont-img{
+    width: 1200px;
+    height: 1200px;
+    margin: auto;
+}
+.type-1 > .cont-item > .cont-canvas > .cont-img > img{
+    margin-right: auto;
+    margin-left: auto;
+}
+.type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text{
+    position: absolute;
+    width: inherit;
+    height: 100px;
+    margin-top: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+.type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text > .text-precio{     
+    font-size: 4em;
+    font-weight: bold;
+}
+.type-1 > .cont-item > .cont-canvas > .cont-img > .cont-text > .text-medida{     
+    font-size: 2em;
+    font-weight: bold;
+}
+/* End styles type-1 */
+/* Type-2 css styles */
+/* End styles type-2 */

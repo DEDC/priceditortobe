@@ -88,30 +88,36 @@ function clean(){
 }
 
 function initCanvas(){
+    var cont = 1;
     document.getElementById('prueba').addEventListener('click', function(){
+        var cont_img = document.getElementsByClassName('cont-img');
         var zip = new JSZip();
-        var cont_img = document.getElementsByClassName('cont-img')[0];
-        html2canvas(cont_img, {
-            onrendered: function(canvas) {
-                function getBase64Image(img) {
-		            var canvas = document.createElement("canvas");
-		            canvas.width = img.width;
-                    canvas.height = img.height;
-		            var ctx = canvas.getContext("2d");
-		            ctx.drawImage(img, 0, 0);
-		            var dataURL = canvas.toDataURL("image/png");
-		            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        for(i=0; i<cont_img.length; i++){
+            html2canvas(cont_img[i],{
+                onrendered: function(canvas) { 
+                    function getBase64Image(img) {
+                        var canvas = document.createElement("canvas"); 
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        var ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0);
+                        var dataURL = canvas.toDataURL("image/jpg");
+                        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+                    }
+                    var img2 = getBase64Image(canvas);
+                    var img = zip.folder("images");
+                    var nombre = 'plantilla'+cont+'.jpg';
+                    img.file(nombre,  getBase64Image(canvas), {base64: true});
+                    if(cont==cont_img.length){
+                        zip.generateAsync({type:"blob"})
+                        .then(function(content) {
+                            saveAs(content, "example.zip");
+                        });
+                    }   
+                    cont++;
                 }
-                theCanvas = canvas;
-                var img2 = getBase64Image(canvas);
-			    zip.folder("images");
-			    var img = zip.folder("images");
-			    img.file("pantilla2.png", img2, {base64: true});
-			    zip.generateAsync({type:"blob"}).then(function(content) {
-			        saveAs(content, "plantillas.zip");
-		        });    
-            }
-        });
+            });
+        }        
     });
     var price_input = document.querySelectorAll(".precio");
     var medida_input = document.querySelectorAll(".medida");
