@@ -5,15 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/type-styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <title>Productos seleccionados</title>
+    <style>
+        .container{
+            margin-top: 100px;
+        }
+        #loader{
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #222222;
+            z-index: 1000;  
+            /* display: flex; */
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"  id="materialize">
 </head>
 <body>
     <main> 
+        <div id="loader">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>      
+        </div>
         <button id="prueba" >Descargar imágenes</button>
+        <div class="container">
+            {% for p in productos %}
+            <div class="row type-1">
+                <h5>{{p.nombre}}</h5>
+                <div class="divider"></div>
+                <br>
+                <div class="col l8 cont-canvas">
+                    <div class="">
+                        <div class="cont-text">
+                            <span class="text-precio" data-id="{{p.id}}"></span>
+                            <span class="text-medida" data-id="{{p.id}}"></span>
+                        </div>
+                        <img src="{% get_static_prefix %}images/{{p.imagen.imagen}}" class="responsive-img">
+                    </div>
+                </div>
+                <div class="col l4">
+                    <div class="input-field">
+                        <input type="number" id="precio-{{p.id}}" class="precio" data-id="{{p.id}}">
+                        <label for="precio-{{p.id}}">Precio</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" id="medida-{{p.id}}" class="medida" data-id="{{p.id}}">
+                        <label for="medida-{{p.id}}">Unidad de medida</label>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+            <!-- <div class="row type-1">
+            <h2>{{p.nombre}}</h2>
+            <div class="col l6">
+                <div class="cont-img" id="{{p.id}}">
+                    <div class="cont-text">
+                        <span class="text-precio" data-id="{{p.id}}"></span>
+                        <span class="text-medida" data-id="{{p.id}}"></span>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col l6">
+                <label for="precio-{{p.id}}">Precio</label>
+                <input type="text" class="precio" data-id="{{p.id}}">
+                <label for="medida-{{p.id}}">Unidad de medida</label>
+                    <input type="text" class="medida" data-id="{{p.id}}">
+                </div>    
+            </div> -->
+        <!-- <button id="prueba" >Descargar imágenes</button>
         {% for p in productos %}
         <div class="type-1">
             <div class="cont-item">
@@ -32,14 +112,16 @@
                     </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
+        </div> -->
+        <!-- {% endfor %} -->
     </main>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
     <script src="{% static 'js/jszip.min.js' %}"></script>
     <script src="{% static 'js/filesaver.js' %}"></script>
     <script src="{% static 'js/html2canvas.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/jq.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         window.onload = function(){
             initCanvas();

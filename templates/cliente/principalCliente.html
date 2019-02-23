@@ -11,31 +11,34 @@
     <style>
         ul[data-display='hide']{display: none !important;}
         ul[data-display='show']{display: block !important;}
-        .container{margin-top: 100px;}
-        #next{animation-delay: 0.7s;}
+        .container{margin-top: 130px;}
+        #next{animation-delay: 0.5s;}
         .input-field{animation-delay: 0.3s}
+        nav{height: 40px !important;line-height: 40px !important;}
     </style>
 </head>
 <body>
+    <nav class="teal lighten-2"></nav>
     <main>
-        <div class="container">
+        <!-- <div class="container"> -->
             <div class="row">
-                <div class="input-field col offset-l3 l6 animated fadeIn faster">
+                <div class="input-field col offset-l2 l5 animated fadeIn faster">
                     <input type="text" id="search" class="autocomplete" autocomplete="off">
                     <label for="search">Escriba el nombre del producto</label>
+                    <form action="{% url 'usuarios:show-producto' %}" method="post">
+                        {% csrf_token %}
+                        <div id="cont-result" class="">
+                            <ul class="collection" data-display="hide"></ul>
+                            <br>
+                            <input type="button" value="Siguiente" class="btn right animated fadeIn" id="next">
+                        </div>
+                    </form>
+                </div>
+                <div class="col l5">
+
                 </div>
             </div>
-            <div class="row">
-                <form action="{% url 'usuarios:show-producto' %}" method="post">
-                    {% csrf_token %}
-                    <div id="cont-result" class="col offset-l3 l6">
-                        <ul class="collection" data-display="hide"></ul>
-                        <br>
-                        <input type="button" value="Siguiente" class="btn right animated fadeIn" id="next">
-                    </div>
-                </form>
-            </div>
-        </div>
+        <!-- </div> -->
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

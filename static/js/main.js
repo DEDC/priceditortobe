@@ -88,13 +88,15 @@ function clean(){
 }
 
 function initCanvas(){
-    var cont = 1;
     document.getElementById('prueba').addEventListener('click', function(){
-        var cont_img = document.getElementsByClassName('cont-img');
+        var cont = 1;
+        document.getElementById('loader').style.display = 'flex';
+        var cont_img = document.getElementsByClassName('cont-canvas');
         var zip = new JSZip();
         for(i=0; i<cont_img.length; i++){
-            html2canvas(cont_img[i],{
-                onrendered: function(canvas) { 
+            cont_img[i].firstElementChild.className = 'cont-img';
+            html2canvas(cont_img[i].firstElementChild,{
+                onrendered: function(canvas){ 
                     function getBase64Image(img) {
                         var canvas = document.createElement("canvas"); 
                         canvas.width = img.width;
@@ -104,8 +106,7 @@ function initCanvas(){
                         var dataURL = canvas.toDataURL("image/jpg");
                         return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
                     }
-                    var img2 = getBase64Image(canvas);
-                    var img = zip.folder("images");
+                    var img = zip.folder("imagenes");
                     var nombre = 'plantilla'+cont+'.jpg';
                     img.file(nombre,  getBase64Image(canvas), {base64: true});
                     if(cont==cont_img.length){
@@ -117,11 +118,17 @@ function initCanvas(){
                     cont++;
                 }
             });
-        }        
+        }
+        window.setTimeout(function(){
+            $('.cont-img').removeClass('cont-img');
+            document.getElementById('loader').style.display = 'none';
+        },5000);     
+        
     });
     var price_input = document.querySelectorAll(".precio");
     var medida_input = document.querySelectorAll(".medida");
     if(price_input){
+        //let
         price_input.forEach(element => {
             element.addEventListener('input', function(){
                 drawText(this);

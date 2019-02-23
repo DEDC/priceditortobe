@@ -5,6 +5,7 @@ from .forms import fRegistroUsuario
 
 def vLogin(request):
     logout(request)
+    print(request)
     if request.method == 'POST':
         user = request.POST.get('user')
         passw = request.POST.get('pass')
