@@ -46,7 +46,6 @@
                 </div>
             </div>      
         </div>
-        <button id="prueba" >Descargar imágenes</button>
         <div class="container">
             {% for p in productos %}
             <div class="row type-1">
@@ -54,8 +53,8 @@
                 <div class="divider"></div>
                 <br>
                 <div class="col l8 cont-canvas">
-                    <div class="">
-                        <div class="cont-text">
+                    <div class="preview-cont-img">
+                        <div class="cont-text preview-text">
                             <span class="text-precio" data-id="{{p.id}}"></span>
                             <span class="text-medida" data-id="{{p.id}}"></span>
                         </div>
@@ -64,7 +63,7 @@
                 </div>
                 <div class="col l4">
                     <div class="input-field">
-                        <input type="number" id="precio-{{p.id}}" class="precio" data-id="{{p.id}}">
+                        <input type="text" id="precio-{{p.id}}" class="precio" data-id="{{p.id}}">
                         <label for="precio-{{p.id}}">Precio</label>
                     </div>
                     <div class="input-field">
@@ -74,54 +73,15 @@
                 </div>
             </div>
             {% endfor %}
+            <button id="prueba" class="btn right">Descargar imágenes</button>
         </div>
-            <!-- <div class="row type-1">
-            <h2>{{p.nombre}}</h2>
-            <div class="col l6">
-                <div class="cont-img" id="{{p.id}}">
-                    <div class="cont-text">
-                        <span class="text-precio" data-id="{{p.id}}"></span>
-                        <span class="text-medida" data-id="{{p.id}}"></span>
-                    </div>
-                    
-                </div>
-            </div>
-            <div class="col l6">
-                <label for="precio-{{p.id}}">Precio</label>
-                <input type="text" class="precio" data-id="{{p.id}}">
-                <label for="medida-{{p.id}}">Unidad de medida</label>
-                    <input type="text" class="medida" data-id="{{p.id}}">
-                </div>    
-            </div> -->
-        <!-- <button id="prueba" >Descargar imágenes</button>
-        {% for p in productos %}
-        <div class="type-1">
-            <div class="cont-item">
-                <h2>{{p.nombre}}</h2>
-                <label for="precio-{{p.id}}">Precio</label>
-                <input type="text" class="precio" data-id="{{p.id}}">
-                <label for="medida-{{p.id}}">Unidad de medida</label>
-                <input type="text" class="medida" data-id="{{p.id}}">
-                <div class="cont-canvas">
-                    <div class="cont-img" id="{{p.id}}">
-                        <div class="cont-text">
-                            <span class="text-precio" data-id="{{p.id}}"></span>
-                            <span class="text-medida" data-id="{{p.id}}"></span>
-                        </div>
-                        <img src="{% get_static_prefix %}images/{{p.imagen.imagen}}">
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!-- {% endfor %} -->
     </main>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="{% static 'js/jszip.min.js' %}"></script>
     <script src="{% static 'js/filesaver.js' %}"></script>
     <script src="{% static 'js/html2canvas.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/jq.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
         window.onload = function(){
             initCanvas();

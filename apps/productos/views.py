@@ -14,7 +14,7 @@ def vRegistroCategoria(request):
         fRC = fRegistroCategoria()
     context = {'fRC': fRC}
     return render(request, 'admin/registroCategoria.html', context)
-
+    
 def vRegistroProducto(request):
     if request.method == 'POST':
         fRP = fRegistroProducto(request.POST)

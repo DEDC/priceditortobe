@@ -91,6 +91,7 @@ function initCanvas(){
     document.getElementById('prueba').addEventListener('click', function(){
         var cont = 1;
         document.getElementById('loader').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
         var cont_img = document.getElementsByClassName('cont-canvas');
         var zip = new JSZip();
         for(i=0; i<cont_img.length; i++){
@@ -120,15 +121,14 @@ function initCanvas(){
             });
         }
         window.setTimeout(function(){
-            $('.cont-img').removeClass('cont-img');
+            $('.cont-img').removeClass('cont-img').addClass('preview-cont-img');
             document.getElementById('loader').style.display = 'none';
+            document.body.style.overflowY = 'scroll';
         },5000);     
-        
     });
     var price_input = document.querySelectorAll(".precio");
     var medida_input = document.querySelectorAll(".medida");
     if(price_input){
-        //let
         price_input.forEach(element => {
             element.addEventListener('input', function(){
                 drawText(this);
