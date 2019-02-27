@@ -7,38 +7,55 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <title>Principal Cliente</title>
     <style>
         ul[data-display='hide']{display: none !important;}
         ul[data-display='show']{display: block !important;}
-        .container{margin-top: 130px;}
+        #cont-search{margin-top: 100px;}
+        #cont-selected{margin-top: 4%;}
         #next{animation-delay: 0.5s;}
         .input-field{animation-delay: 0.3s}
         nav{height: 40px !important;line-height: 40px !important;}
+        a.sidenav-trigger{height: 40px !important;line-height: 40px !important;}
+        a.sidenav-trigger i{height: 40px !important;line-height: 40px !important;}
     </style>
 </head>
-<body>
-    <nav class="teal lighten-2"></nav>
+<body class="grey lighten-5">
+    <header>
+        <nav class="teal lighten-2">
+            <div class="nav-wrapper">
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+                <ul class="sidenav" id="mobile-demo">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <main>
-        <!-- <div class="container"> -->
-            <div class="row">
-                <div class="input-field col offset-l2 l5 animated fadeIn faster">
-                    <input type="text" id="search" class="autocomplete" autocomplete="off">
-                    <label for="search">Escriba el nombre del producto</label>
-                    <form action="{% url 'usuarios:show-producto' %}" method="post">
-                        {% csrf_token %}
-                        <div id="cont-result" class="">
-                            <ul class="collection" data-display="hide"></ul>
-                            <br>
-                            <input type="button" value="Siguiente" class="btn right animated fadeIn" id="next">
-                        </div>
-                    </form>
-                </div>
-                <div class="col l5">
-
+        <div class="row">
+            <div class="input-field col offset-l1 l5 s12 offset-m2 m8 animated fadeIn faster" id="cont-search">
+                <input type="text" id="search" class="autocomplete" autocomplete="off">
+                <label for="search">Escriba el nombre del producto</label>
+                <div id="cont-result" class="">
+                    <ul class="collection" data-display="hide"></ul>
+                    <br>
+                    <input type="button" value="Siguiente" class="btn right animated fadeIn" id="next">
                 </div>
             </div>
-        <!-- </div> -->
+            <div class="col offset-l1 l4 s12 offset-m2 m8" id="cont-selected">
+                <h6 class="center-align animated fadeInDown delay-1s faster">Productos seleccionados</h6>
+                <form action="{% url 'usuarios:show-producto' %}" method="post">
+                    {% csrf_token %}
+                    <div class="cont-selected-items">
+                        <ul class="collection" data-display="hide"></ul>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -46,6 +63,8 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function(){
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems);
             initSearch();
         });
     </script>

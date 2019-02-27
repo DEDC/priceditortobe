@@ -13,7 +13,6 @@
     align-items: baseline;
     color: white;
     font-family: 'Roboto', sans-serif;
-    /* background-color: red; */
 }
 .type-1 > .cont-canvas > .cont-img > .cont-text > .text-precio{     
     font-size: 4em;
@@ -32,29 +31,23 @@
 .preview-cont-img .preview-text{
     position: absolute;
     width: inherit;
-    height: 50px;
+    height: 10%;
     margin-top: 20%;
     display: flex;
     justify-content: center;
     align-items: baseline;
     color: white;
     font-family: 'Roboto', sans-serif;
-    /* background-color: red; */
 }
 .preview-cont-img .preview-text > .text-precio{
-    font-size: 2rem;
+    font-size: 5vmin;
     font-weight: bold;
 }
 .preview-cont-img .preview-text > .text-medida{
-    font-size: 1rem;
+    font-size: 3vmin;
     font-weight: bold;
 }
 /* End styles type-1 preview */
-
-
-
-
-
 
 /* Type-2 css styles */
 /* End styles type-2 */

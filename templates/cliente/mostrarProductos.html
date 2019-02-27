@@ -5,31 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/type-styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"  id="materialize">
     <title>Productos seleccionados</title>
     <style>
-        .container{
-            margin-top: 100px;
-        }
-        #loader{
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: #222222;
-            z-index: 1000;  
-            /* display: flex; */
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
+        .container{margin-top: 100px;}
+        #prueba{margin: 50px 0 30px 0;}
+        #loader{position: fixed;top: 0;width: 100%;height: 100%;background: #222222;z-index: 1000;display: none;justify-content: center;align-items: center;}
+        nav{height: 40px !important;line-height: 40px !important;}
+        a.sidenav-trigger{height: 40px !important;line-height: 40px !important;}
+        a.sidenav-trigger i{height: 40px !important;line-height: 40px !important;}
+        i.prefix{color: #bdbdbd;}
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"  id="materialize">
 </head>
-<body>
+<body class="grey lighten-5">
+    <header>
+        <nav class="teal lighten-2">
+            <div class="nav-wrapper">
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'usuarios:principalCliente' %}">Buscar productos</a></li>
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+                <ul class="sidenav" id="mobile-demo">
+                    <li><a href="{% url 'usuarios:principalCliente' %}">Buscar productos</a></li>
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <main> 
         <div id="loader">
             <div class="preloader-wrapper big active">
@@ -52,7 +59,7 @@
                 <h5>{{p.nombre}}</h5>
                 <div class="divider"></div>
                 <br>
-                <div class="col l8 cont-canvas">
+                <div class="col l8 s12 cont-canvas">
                     <div class="preview-cont-img">
                         <div class="cont-text preview-text">
                             <span class="text-precio" data-id="{{p.id}}"></span>
@@ -61,19 +68,21 @@
                         <img src="{% get_static_prefix %}images/{{p.imagen.imagen}}" class="responsive-img">
                     </div>
                 </div>
-                <div class="col l4">
+                <div class="col l4 s12">
                     <div class="input-field">
+                        <i class="fas fa-dollar-sign prefix"></i>
                         <input type="text" id="precio-{{p.id}}" class="precio" data-id="{{p.id}}">
                         <label for="precio-{{p.id}}">Precio</label>
                     </div>
                     <div class="input-field">
+                        <i class="fas fa-weight-hanging prefix"></i>
                         <input type="text" id="medida-{{p.id}}" class="medida" data-id="{{p.id}}">
                         <label for="medida-{{p.id}}">Unidad de medida</label>
                     </div>
                 </div>
             </div>
             {% endfor %}
-            <button id="prueba" class="btn right">Descargar imágenes</button>
+            <button id="prueba" class="btn right"><i class="fas fa-file-download left"></i>Descargar imágenes</button>
         </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -84,6 +93,8 @@
     <script src="{% static 'js/jq.min.js' %}"></script>
     <script>
         window.onload = function(){
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems);
             initCanvas();
         };
     </script>

@@ -28,7 +28,7 @@ function initSearch(){
 }
 
 function getChkCheked(){
-    var chkb = document.querySelectorAll("input[type='checkbox']:checked");
+    var chkb = document.querySelectorAll(".cont-selected-items input[type='checkbox']:checked");
     if(chkb.length){
         return true;
     }
@@ -73,10 +73,20 @@ function createListResults(productos){
         input.type = 'checkbox';
         input.value = e.pk;
         input.name = 'chkb'
+        input.addEventListener('click',function(){createListSelectedResults(this)});
         label.appendChild(input);
         label.appendChild(span);
     });
     ul.setAttribute('data-display', 'show');
+}
+
+function createListSelectedResults(e){
+    if(e.checked){
+        var ul2 = document.getElementsByClassName('collection')[1];
+        ul2.setAttribute('data-display', 'show');
+        var clone = e.closest('li').cloneNode(true)
+        ul2.append(clone);
+    }
 }
 
 function clean(){

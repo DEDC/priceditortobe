@@ -1,23 +1,167 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
+    <title>Administración</title>
+    <style>
+        nav{height: 40px !important;line-height: 40px !important;}
+        .card-panel i{color: #e0e0e0;}
+        a.sidenav-trigger{height: 40px !important;line-height: 40px !important;}
+        a.sidenav-trigger i{height: 40px !important;line-height: 40px !important;}
+        .row:nth-child(1){margin-top: 40px;padding: 30px;}
+        .row:nth-child(2),.row:nth-child(3),.row:nth-child(4){padding: 0 120px 50px 120px; margin-top: 60px;}
+        .card-panel{cursor: pointer;}
+        div.tabla{display: none;}
+        i.active{color: #9e9e9e}
+    </style>
 </head>
-<body>
+<body class="grey lighten-5">
+    <header>
+        <nav class="teal lighten-2">
+            <div class="nav-wrapper">
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+                <ul class="sidenav" id="mobile-demo">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <main>
-        <h1>Principal Admin</h1>
-        <p>
-            <a href="{% url 'usuarios:registroUsuario' %}">Registro usuarios</a>
-        </p>
-        <p>
-            <a href="{% url 'usuarios:registroCategoria' %}">Registro categorias</a>
-        </p>
-        <p>
-            <a href="{% url 'usuarios:registroProducto' %}">Registro productos</a>
-        </p>
+        <div class="row">
+            <div class="col l4 m6 s12">
+                <div class="card-panel hoverable" data-target="#cont-user-table">
+                    <i class="fas fa-users fa-3x right"></i>
+                    <h5>7</h5>
+                    <h6>Usuarios</h6>
+                </div>
+            </div>
+            <div class="col l4 m6 s12">
+                <div class="card-panel hoverable" data-target="#cont-product-table">
+                    <i class="fas fa-apple-alt fa-3x right"></i>
+                    <h5>10</h5>
+                    <h6>Productos</h6>
+                </div>
+            </div>
+            <div class="col l4 m6 s12">
+                <div class="card-panel hoverable" data-target="#cont-category-table">
+                    <i class="fas fa-boxes fa-3x right"></i>
+                    <h5>3</h5>
+                    <h6>Categorias</h6>
+                </div>
+            </div>
+        </div>
+        <div class="row tabla" id="cont-user-table">
+            <div class="col l12 m12 s12">
+                <!-- tabla usuarios -->
+                <h6 class="center-align">Usuarios</h6>
+                <table id="user-table" class="display">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Usuario</th>
+                            <th>Admin</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr>
+                            <td>{{usuario.get_full_name}}</td>
+                            <td>{{usuario.email}}</td>
+                            <td>{{usuario.username}}</td>
+                            <td>{{usuario.is_staff}}</td>
+                            <td>
+                                <a href="{% url 'usuarios:editarUsuario' usuario.id %}" class="btn blue"><i class="far fa-edit"></i></a>
+                                <a href="{% url 'usuarios:eliminarUsuario' usuario.id %}" class="btn red"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row tabla" id="cont-category-table">
+            <!-- tabla categorias -->
+            <div class="col l12 m12 s12">
+                <h6 class="center-align">Categorias</h6>
+                <table id="category-table" class="display">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for categoria in categorias %}
+                        <tr>
+                            <td>{{categoria.nombre}}</td>
+                            <td>
+                                <a href="" class="btn blue"><i class="far fa-edit"></i></a>
+                                <a href="" class="btn red"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row tabla" id="cont-product-table">
+            <!-- tabla productos -->
+            <div class="col l12 m12 s12">
+                <h6 class="center-align">Productos</h6> 
+                <table id="product-table" class="display">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Categoria</th>
+                            <th>Imagen</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr>
+                            <td>{{producto.nombre}}</td>
+                            <td>{{producto.categoria.nombre}}</td>
+                            <td>{{producto.imagen.imagen}}</td>
+                            <td>
+                                <a href="" class="btn blue"><i class="far fa-edit"></i></a>
+                                <a href="" class="btn red"><i class="far fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
+    <!-- <a href="{% url 'usuarios:registroUsuario' %}">Registro usuarios</a>
+    <a href="{% url 'usuarios:registroCategoria' %}">Registro categorias</a>
+    <a href="{% url 'usuarios:registroProducto' %}">Registro productos</a> -->
+    <script src="{% static 'js/jq.min.js' %}"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            $('#user-table').DataTable({"lengthMenu": false});
+            $('#category-table').DataTable();
+            $('#product-table').DataTable();
+            $('.card-panel').on('click', function(){
+                $($(this).attr('data-target')).show().siblings('.tabla').hide();
+                $(this).children('i').addClass('active');
+                $(this).parent().siblings().children().children('i').removeClass('active');
+            });
+        });
+    </script>
 </body>
 </html>
