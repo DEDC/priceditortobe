@@ -99,37 +99,27 @@ function clean(){
 
 function initCanvas(){
     document.getElementById('prueba').addEventListener('click', function(){
-        var cont = 1;
         document.getElementById('loader').style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        var cont_img = document.getElementsByClassName('cont-canvas');
+        var cont_img = document.querySelectorAll('.cont-canvas');
         var zip = new JSZip();
-        for(i=0; i<cont_img.length; i++){
-            cont_img[i].firstElementChild.className = 'cont-img';
-            html2canvas(cont_img[i].firstElementChild,{
-                onrendered: function(canvas){ 
-                    function getBase64Image(img) {
-                        var canvas = document.createElement("canvas"); 
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        var ctx = canvas.getContext("2d");
-                        ctx.drawImage(img, 0, 0);
-                        var dataURL = canvas.toDataURL("image/jpg");
-                        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-                    }
-                    var img = zip.folder("imagenes");
-                    var nombre = 'plantilla'+cont+'.jpg';
-                    img.file(nombre,  getBase64Image(canvas), {base64: true});
-                    if(cont==cont_img.length){
-                        zip.generateAsync({type:"blob"})
-                        .then(function(content) {
-                            saveAs(content, "example.zip");
-                        });
-                    }   
-                    cont++;
+        cont_img.forEach((element, index) => {
+            element.firstElementChild.className = 'cont-img';
+            html2canvas(element.firstElementChild).then(function(canvas){
+                var dataURL = canvas.toDataURL('image/jpeg', 0.95);
+                var canvas_url = dataURL.replace(/^data:image\/(png|jpeg);base64,/, "");
+                var img = zip.folder("imagenes");
+                var nombre = 'plantilla'+index+'.jpg';
+                console.log(nombre);
+                img.file(nombre,  canvas_url, {base64: true});
+                if(index==cont_img.length-1){
+                    zip.generateAsync({type:"blob"})
+                    .then(function(content) {
+                        saveAs(content, "example.zip");
+                    });
                 }
             });
-        }
+        });
         window.setTimeout(function(){
             $('.cont-img').removeClass('cont-img').addClass('preview-cont-img');
             document.getElementById('loader').style.display = 'none';
@@ -159,7 +149,12 @@ function drawText(e){
     switch (e.getAttribute('class')){
         case 'precio':
             var text_precio = document.querySelector(".text-precio[data-id='"+id+"']");
-            text_precio.textContent = e.value; 
+            if (e.value){
+                text_precio.textContent = '$' + e.value;
+            }
+            else{
+                text_precio.textContent = '';
+            }
             return;
         case 'medida':
             var text_medida = document.querySelector(".text-medida[data-id='"+id+"']");

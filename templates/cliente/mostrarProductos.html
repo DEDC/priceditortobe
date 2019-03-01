@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +9,53 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/type-styles.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"  id="materialize">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+        id="materialize">
     <title>Productos seleccionados</title>
     <style>
-        .container{margin-top: 100px;}
-        #prueba{margin: 50px 0 30px 0;}
-        #loader{position: fixed;top: 0;width: 100%;height: 100%;background: #222222;z-index: 1000;display: none;justify-content: center;align-items: center;}
-        nav{height: 40px !important;line-height: 40px !important;}
-        a.sidenav-trigger{height: 40px !important;line-height: 40px !important;}
-        a.sidenav-trigger i{height: 40px !important;line-height: 40px !important;}
-        i.prefix{color: #bdbdbd;}
+        .container {
+            margin-top: 100px;
+        }
+
+        #prueba {
+            margin: 50px 0 30px 0;
+        }
+
+        #loader {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #222222;
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav {
+            height: 40px !important;
+            line-height: 40px !important;
+        }
+
+        a.sidenav-trigger {
+            height: 40px !important;
+            line-height: 40px !important;
+        }
+
+        a.sidenav-trigger i {
+            height: 40px !important;
+            line-height: 40px !important;
+        }
+
+        i.prefix {
+            color: #bdbdbd;
+        }
     </style>
 </head>
+
 <body class="grey lighten-5">
     <header>
         <nav class="teal lighten-2">
@@ -37,7 +72,7 @@
             </div>
         </nav>
     </header>
-    <main> 
+    <main>
         <div id="loader">
             <div class="preloader-wrapper big active">
                 <div class="spinner-layer spinner-red-only">
@@ -51,7 +86,7 @@
                         <div class="circle"></div>
                     </div>
                 </div>
-            </div>      
+            </div>
         </div>
         <div class="container">
             {% for p in productos %}
@@ -71,7 +106,7 @@
                 <div class="col l4 s12">
                     <div class="input-field">
                         <i class="fas fa-dollar-sign prefix"></i>
-                        <input type="text" id="precio-{{p.id}}" class="precio" data-id="{{p.id}}">
+                        <input type="number" id="precio-{{p.id}}" class="precio" data-id="{{p.id}}" min="1" step=".01">
                         <label for="precio-{{p.id}}">Precio</label>
                     </div>
                     <div class="input-field">
@@ -92,11 +127,12 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/jq.min.js' %}"></script>
     <script>
-        window.onload = function(){
+        window.onload = function () {
             var elems = document.querySelectorAll('.sidenav');
             var instances = M.Sidenav.init(elems);
             initCanvas();
         };
     </script>
 </body>
+
 </html>

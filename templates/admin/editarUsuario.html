@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <title>Editar usuario</title>
     <style>
-        nav{height: 40px !important;line-height: 40px !important;}
-        .container{ margin-top: 100px;}
-        .cont-edit{padding: 20px 20px 0 20px !important;}
-        .btn{width: 100%;}
+        nav {
+            height: 40px !important;
+            line-height: 40px !important;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        .cont-edit {
+            padding: 20px 20px 0 20px !important;
+        }
+
+        .btn {
+            width: 100%;
+        }
     </style>
 </head>
+
 <body class="grey lighten-5">
     <header>
         <nav class="teal lighten-2">
@@ -79,15 +94,16 @@
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function(){
+        document.addEventListener('DOMContentLoaded', function () {
             var pass = document.getElementsByName('password')[0];
             pass.removeAttribute('required')
             pass.disabled = true;
-            document.getElementById('active-pass').addEventListener('click', function(){
+            document.getElementById('active-pass').addEventListener('click', function () {
                 pass.disabled = false;
                 pass.focus();
             });
         });
     </script>
 </body>
+
 </html>

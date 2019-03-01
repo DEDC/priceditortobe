@@ -1,20 +1,50 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.core import serializers
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import get_object_or_404
 from .forms import fRegistroCategoria, fRegistroProducto, fRegistroImagen
-from .models import Productos
+from .models import Productos, Categorias
+from apps.usuarios.views import is_staff_check
 
+@login_required(login_url = '/')
+@user_passes_test(is_staff_check, login_url = '/')
 def vRegistroCategoria(request):
     if request.method == 'POST':
         fRC = fRegistroCategoria(request.POST)
         if fRC.is_valid():
             fRC.save()
-            return redirect('usuarios:registroCategoria')
+            return redirect('usuarios:principalAdmin')
     else:
         fRC = fRegistroCategoria()
     context = {'fRC': fRC}
     return render(request, 'admin/registroCategoria.html', context)
+
+@login_required(login_url = '/')
+@user_passes_test(is_staff_check, login_url = '/')
+def vEditarCategoria(request, id):
+    categoria = get_object_or_404(Categorias, pk = id)
+    if request.method == 'POST':
+        form = fRegistroCategoria(request.POST, instance = categoria)
+        if form.is_valid():
+            form.save()
+            return redirect('usuarios:principalAdmin')
+    else:
+        form = fRegistroCategoria(instance = categoria)
+    context = {'categoria' : categoria, 'form' : form}
+    return render(request, 'admin/editarCategoria.html', context)
+
+@login_required(login_url = '/')
+@user_passes_test(is_staff_check, login_url = '/')
+def vEliminarCategoria(request, id):
+    categoria = get_object_or_404(Categorias, pk = id)
+    if request.method == 'POST':
+        categoria.delete()
+    context = {'categoria' : categoria}
+    return render(request, 'admin/eliminarCategoria.html', context)
     
+@login_required(login_url = '/')
+@user_passes_test(is_staff_check, login_url = '/')
 def vRegistroProducto(request):
     if request.method == 'POST':
         fRP = fRegistroProducto(request.POST)

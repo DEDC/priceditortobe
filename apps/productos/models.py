@@ -1,9 +1,5 @@
 from django.db import models
-
-class Categorias(models.Model):
-    nombre = models.CharField(max_length = 50)
-    def __str__(self):
-        return '%s' % (self.nombre)
+from apps.usuarios.models import Categorias
 
 class Imagenes(models.Model):
     imagen = models.ImageField(upload_to='img_pro/')

@@ -1,19 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registro categoría</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>Nueva categoría</title>
+    <style>
+        nav {
+            height: 40px !important;
+            line-height: 40px !important;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        .cont-edit {
+            padding: 20px 20px 0 20px !important;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    </style>
 </head>
-<body>
+
+<body class="grey lighten-5">
+    <header>
+        <nav class="teal lighten-2">
+            <div class="nav-wrapper">
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+                <ul class="sidenav" id="mobile-demo">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <main>
-        <h1>Registro Categorias</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ fRC.as_p }}
-            <input type="submit" value="guardar">
-        </form>
+        <div class="container">
+            <div class="row">
+                <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white cont-edit">
+                    <h5 class="center-align">Nueva Categoría</h5>
+                    <br>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="input-field">
+                            {{fRC.nombre}}
+                            <label for="id_nombre">Nombre</label>
+                        </div>
+                        <div class="row">
+                            <div class="col l6 m6 s6">
+                                <button type="submit" class="btn green">Guardar</button>
+                            </div>
+                            <div class="col l6 m6 s6">
+                                <a href="{% url 'usuarios:principalAdmin' %}" class="btn grey">Cancelar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
+
 </html>

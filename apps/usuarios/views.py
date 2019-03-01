@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404
 from django.http.response import HttpResponseNotFound
-from django.contrib.auth.models import User
 from .forms import fRegistroUsuario
+from .models import User
 from apps.productos.models import Categorias, Productos 
 
 def vLogin(request):
@@ -29,60 +29,74 @@ def vLogout(request):
     logout(request)
     return redirect('login')
 
+def is_staff_check(user):
+    return user.is_staff
+
 @login_required(login_url = '/')
+@user_passes_test(is_staff_check, login_url = '/')
 def vPrincipalAdmin(request):
     usuarios = User.objects.all()
+    total_u = usuarios.count()
     categorias = Categorias.objects.all()
+    total_c = categorias.count()
     productos = Productos.objects.all()
-    context = {'usuarios' : usuarios, 'categorias' : categorias, 'productos' : productos}
+    total_p = productos.count()
+    context = {'usuarios' : usuarios, 'categorias' : categorias, 'productos' : productos, 'total_u' : total_u, 'total_c' : total_c, 'total_p' : total_p}
     return render(request, 'admin/principalAdmin.html', context)
 
+@login_required(login_url = '/')
+@user_passes_test(is_staff_check, login_url = '/')
 def vRegistroUsuario(request):
     if request.method == 'POST':
         fRU = fRegistroUsuario(request.POST)
         if fRU.is_valid():
             usuario = fRU.save(commit = False)
             if not request.POST.__contains__('is_cliente'):
-                usuario.is_superuser = True
+                print('yeaaaa')
+                usuario.is_staff = True
             usuario.set_password(usuario.password)
             usuario.save()
-            return redirect('usuarios:registroUsuario')
+            return redirect('usuarios:principalAdmin')
     else:
         fRU = fRegistroUsuario()
     context = {'fRU' : fRU}
     return render(request, 'admin/registroUsuario.html', context)
 
+@login_required(login_url = '/')
+@user_passes_test(is_staff_check, login_url = '/')
 def vEditarUsuario(request, id):
-    # decorador para validar si es admin
-    if request.user.is_staff:
-        usuario = get_object_or_404(User, pk = id)
-        if request.method == 'POST':
-            if request.POST.get('password'):
-                form = fRegistroUsuario(request.POST, instance=usuario)    
-                if form.is_valid():
-                    f = form.save(commit=False)
-                    f.set_password(f.password)
-                    f.save()
-            else:
-                r_copy = request.POST.copy()
-                r_copy.setdefault('password', '12345')
-                form = fRegistroUsuario(r_copy, instance=usuario)    
-                if form.is_valid():
-                    f = form.save(commit=False)
-                    f.save(update_fields = ['first_name', 'last_name', 'username', 'email'])
+    usuario = get_object_or_404(User, pk = id)
+    if request.method == 'POST':
+        if request.POST.get('password'):
+            form = fRegistroUsuario(request.POST, instance=usuario)    
+            if form.is_valid():
+                f = form.save(commit=False)
+                f.set_password(f.password)
+                f.save()
+                return redirect('usuarios:principalAdmin')
         else:
-            form = fRegistroUsuario(instance = usuario)
+            r_copy = request.POST.copy()
+            r_copy.setdefault('password', '12345')
+            form = fRegistroUsuario(r_copy, instance=usuario)    
+            if form.is_valid():
+                f = form.save(commit=False)
+                f.save(update_fields = ['first_name', 'last_name', 'username', 'email'])
+                return redirect('usuarios:principalAdmin')
     else:
-        return redirect('login')
+        form = fRegistroUsuario(instance = usuario)
     context = {'form' : form, 'usuario' : usuario}
     return render(request, 'admin/editarUsuario.html', context)
 
+@login_required(login_url = '/')
+@user_passes_test(is_staff_check, login_url = '/')
 def vEliminarUsuario(request, id):
     usuario = get_object_or_404(User, pk = id)
     if request.method == 'POST':
         usuario.delete()
+        return redirect('usuarios:principalAdmin')
     context = {'usuario' : usuario}
     return render(request, 'admin/eliminarUsuario.html', context)    
 
+@login_required(login_url = '/')
 def vPrincipalCliente(request):
     return render(request, 'cliente/principalCliente.html')

@@ -1,23 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Registro Usuario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>Nuevo usuario</title>
+    <style>
+        nav {
+            height: 40px !important;
+            line-height: 40px !important;
+        }
+
+        .container {
+            margin-top: 100px;
+        }
+
+        .cont-edit {
+            padding: 20px 20px 0 20px !important;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    </style>
 </head>
-<body>
+
+<body class="grey lighten-5">
+    <header>
+        <nav class="teal lighten-2">
+            <div class="nav-wrapper">
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+                <ul class="sidenav" id="mobile-demo">
+                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
     <main>
-        <h1>Registro Usuarios</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{fRU.as_p}}
-            <p>
-                <label for="chk_cliente">Cliente</label>
-                <input type="checkbox" name="is_cliente" id="chk_cliente">
-            </p>
-            <input type="submit" value="Guardar">
-        </form>
+        <div class="container">
+            <div class="row">
+                <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white cont-edit">
+                    <h5 class="center-align">Nuevo Usuario</h5>
+                    <br>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="input-field col l6 m6 s12">
+                                {{fRU.first_name}}
+                                <label for="id_first_name">Nombre</label>
+                            </div>
+                            <div class="input-field col l6 m6 s12">
+                                {{fRU.last_name}}
+                                <label for="id_last_name">Apellido</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12 m12 s12">
+                                {{fRU.email}}
+                                <label for="id_email">Correo</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l6 m6 s12">
+                                {{fRU.username}}
+                                <label for="id_username">Usuario</label>
+                            </div>
+                            <div class="input-field col l6 m6 s12">
+                                {{fRU.password}}
+                                <label for="id_password">Contraseña</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col l6">
+                                <label>
+                                    <input type="checkbox" name="is_cliente" id="chk_cliente" class="filled-in">
+                                    <span>*Marque si el usuario será cliente</span>
+                                </label>
+                            </div>    
+                            <div class="col l6 input-field" id="cont-select">
+                                {{fRU.categoria}}
+                                <label>Seleccione una opción</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col l6 m6 s6">
+                                <button type="submit" class="btn green">Guardar</button>
+                            </div>
+                            <div class="col l6 m6 s6">
+                                <a href="{% url 'usuarios:principalAdmin' %}" class="btn grey">Cancelar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var select = document.querySelector('select');
+            var select_m = document.querySelector('#cont-select');
+            select_m.style.display = 'none';
+            var instances = M.FormSelect.init(select);
+            document.querySelector("input[type='checkbox']").addEventListener('click', function(){
+                if(this.checked){
+                    select_m.style.display = 'block';    
+                }
+                else{
+                    select_m.style.display = 'none';
+                    select.selectedIndex = 0;
+                }
+                console.log(select.selectedIndex);
+            });
+        });
+    </script>
 </body>
+
 </html>
