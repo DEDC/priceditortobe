@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,25 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <title>Nuevo usuario</title>
-    <style>
-        nav {
-            height: 40px !important;
-            line-height: 40px !important;
-        }
-
-        .container {
-            margin-top: 100px;
-        }
-
-        .cont-edit {
-            padding: 20px 20px 0 20px !important;
-        }
-
-        .btn {
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Admin | Nuevo usuario</title>
 </head>
 
 <body class="grey lighten-5">
@@ -36,9 +20,11 @@
             <div class="nav-wrapper">
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'usuarios:principalAdmin' %}">Volver a principal</a></li>
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
                 <ul class="sidenav" id="mobile-demo">
+                    <li><a href="{% url 'usuarios:principalAdmin' %}">Volver a principal</a></li>
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
             </div>
@@ -47,7 +33,7 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white cont-edit">
+                <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white cont">
                     <h5 class="center-align">Nuevo Usuario</h5>
                     <br>
                     <form method="post">
@@ -84,7 +70,7 @@
                                     <input type="checkbox" name="is_cliente" id="chk_cliente" class="filled-in">
                                     <span>*Marque si el usuario será cliente</span>
                                 </label>
-                            </div>    
+                            </div>
                             <div class="col l6 input-field" id="cont-select">
                                 {{fRU.categoria}}
                                 <label>Seleccione una opción</label>
@@ -92,10 +78,10 @@
                         </div>
                         <div class="row">
                             <div class="col l6 m6 s6">
-                                <button type="submit" class="btn green">Guardar</button>
+                                <button type="submit" class="btn btn-100 green">Guardar</button>
                             </div>
                             <div class="col l6 m6 s6">
-                                <a href="{% url 'usuarios:principalAdmin' %}" class="btn grey">Cancelar</a>
+                                <a href="{% url 'usuarios:principalAdmin' %}" class="btn btn-100 grey">Cancelar</a>
                             </div>
                         </div>
                     </form>
@@ -104,22 +90,10 @@
         </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var select = document.querySelector('select');
-            var select_m = document.querySelector('#cont-select');
-            select_m.style.display = 'none';
-            var instances = M.FormSelect.init(select);
-            document.querySelector("input[type='checkbox']").addEventListener('click', function(){
-                if(this.checked){
-                    select_m.style.display = 'block';    
-                }
-                else{
-                    select_m.style.display = 'none';
-                    select.selectedIndex = 0;
-                }
-                console.log(select.selectedIndex);
-            });
+        document.addEventListener('DOMContentLoaded', function () {
+            registroUsuario();
         });
     </script>
 </body>

@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import vPrincipalAdmin, vPrincipalCliente, vRegistroUsuario, vEditarUsuario, vEliminarUsuario 
-from apps.productos.views import vRegistroCategoria, vEditarCategoria, vEliminarCategoria, vRegistroProducto, getProductos, showProductos
+from apps.productos.views import vRegistroCategoria, vEditarProducto,  vEliminarProducto, vEditarCategoria, vEliminarCategoria, vRegistroProducto, getProductos, showProductos
 app_name = 'usuarios'
 
 urlpatterns = [
@@ -15,4 +15,6 @@ urlpatterns = [
     path('admin/edit-categoria/<int:id>', vEditarCategoria, name = 'editarCategoria'),
     path('admin/elim-categoria/<int:id>', vEliminarCategoria, name = 'eliminarCategoria'),
     path('admin/nvo-producto', vRegistroProducto, name = 'registroProducto'),
+    path('admin/edit-producto/<int:id>', vEditarProducto, name = 'editarProducto'),
+    path('admin/elim-producto/<int:id>', vEliminarProducto, name = 'eliminarProducto')
 ]

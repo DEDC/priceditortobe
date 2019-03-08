@@ -21,11 +21,7 @@
         }
 
         #cont-search {
-            margin-top: 100px;
-        }
-
-        #cont-selected {
-            margin-top: 4%;
+            margin-top: 40px;
         }
 
         #next {
@@ -68,14 +64,42 @@
         </nav>
     </header>
     <main>
-        <div class="row">
-            <div class="input-field col offset-l1 l5 s12 offset-m2 m8 animated fadeIn faster" id="cont-search">
-                <input type="text" id="search" class="autocomplete" autocomplete="off">
-                <label for="search">Escriba el nombre del producto</label>
-                <div id="cont-result" class="">
-                    <ul class="collection" data-display="hide"></ul>
-                    <br>
-                    <input type="button" value="Siguiente" class="btn right animated fadeIn" id="next">
+        <div class="row" id="cont-search">
+            <div class="col l5 offset-l1 s12 offset-m2 m8">
+                <div class="row">
+                    <div class="col l12 s12 m12">
+                        <p>Filtrar por:</p> 
+                        <label><input type="radio" name="categoria" id="" checked><span>Todas</span></label>
+                        {% for categoria in categorias %}
+                        &nbsp
+                        <label><input type="radio" name="categoria" id="{{categoria.id}}"><span>{{categoria.nombre}}</span></label>
+                        {% endfor %}    
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col l12 s12 m12 animated fadeIn faster" id="cont-search">
+                        <input type="text" id="search" class="autocomplete" autocomplete="off">
+                        <label for="search">Escriba el nombre del producto</label>
+                        <div id="cont-result" class="">
+                            <ul class="collection" data-display="hide"></ul>
+                            <br>
+                            <span id="info"></span>
+                            <div class="preloader-wrapper small">
+                                <div class="spinner-layer spinner-green-only">
+                                    <div class="circle-clipper left">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="gap-patch">
+                                        <div class="circle"></div>
+                                    </div>
+                                    <div class="circle-clipper right">
+                                        <div class="circle"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="button" value="Siguiente" class="btn right animated fadeIn" id="next">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col offset-l1 l4 s12 offset-m2 m8" id="cont-selected">
@@ -100,6 +124,7 @@
             initSearch();
         });
     </script>
+    {% include "validaciones.html" %}
 </body>
 
 </html>

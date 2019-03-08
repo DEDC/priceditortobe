@@ -1,0 +1,65 @@
+/* Administración */
+
+nav {
+    height: 40px !important;
+    line-height: 40px !important;
+}
+
+nav a.sidenav-trigger {
+    height: 40px !important;
+    line-height: 40px !important;
+}
+
+nav a.sidenav-trigger i {
+    height: 40px !important;
+    line-height: 40px !important;
+}
+
+.card-panel i {
+    color: #e0e0e0;
+}
+
+.card-panel {
+    cursor: pointer;
+}
+
+
+div.tabla {
+    display: none;
+}
+
+i.active {
+    color: #9e9e9e
+}
+
+#cont-card-panel {
+    margin-top: 40px;
+    padding: 30px;
+}
+
+#cont-user-table,
+#cont-category-table,
+#cont-product-table {
+    padding: 0 120px 50px 120px;
+    margin-top: 60px;
+}
+
+.container {
+    margin-top: 100px;
+}
+
+.btn-100 {
+    width: 100%;
+}
+
+.cont{
+    padding: 20px 20px 0 20px !important;
+}
+
+.cont-img img {
+    cursor: crosshair;
+}
+
+.color-input {
+    text-align: center;
+}

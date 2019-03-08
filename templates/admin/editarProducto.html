@@ -7,10 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/huebee@1/dist/huebee.min.css">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <title>Admin | Nuevo producto</title>
+    <title>Editar productos</title>
 </head>
 
 <header>
@@ -34,7 +33,7 @@
         <div class="container z-depth-2 cont">
             <div class="row">
                 <div class="col l6">
-                    <h5 class="center-align">Registro productos</h5>
+                    <h5 class="center-align">Editando a {{producto.nombre}}</h5>
                     <br>
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -42,7 +41,7 @@
                             <div class="file-field input-field col l12">
                                 <div class="btn">
                                     <span>Seleccione imagen</span>
-                                    {{fRI.imagen}}
+                                    {{formI.imagen}}
                                 </div>
                                 <div class="file-path-wrapper">
                                     <input class="file-path" type="text">
@@ -51,31 +50,31 @@
                         </div>
                         <div class="row">
                             <div class="input-field col l12">
-                                {{fRP.nombre}}
+                                {{form.nombre}}
                                 <label for="id_nombre">Nombre del producto</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col l6">
-                                {{fRP.categoria}}
+                                {{form.categoria}}
                                 <label for="id_categoria">Categoría</label>
                             </div>
                             <div class="input-field col l6">
-                                {{fRP.color}}
+                                {{form.color}}
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col l6 m6 s6">
-                                <input type="submit" value="guardar" class="btn btn-100 green">
+                            <div class="col l6">
+                                <input type="submit" value="guardar" class="btn btn-100 blue">
                             </div>
-                            <div class="col l6 m6 s6">
+                            <div class="col l6">
                                 <a href="{% url 'usuarios:principalAdmin' %}" class="btn btn-100 grey">Cancelar</a>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="col l6 cont-img right">
-                    <img src="{% static 'images/default.png' %}" alt="" class="responsive-img">
+                    <img src="{% get_static_prefix %}images/{{producto.imagen.imagen}}" alt="" class="responsive-img">
                     <br><br>
                 </div>
             </div>
@@ -84,13 +83,13 @@
     <script src="{% static 'js/jq.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/broiler.min.js' %}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            registroProducto();
-        });
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://unpkg.com/huebee@1/dist/huebee.pkgd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            editarProducto();
+        });
+    </script>
     {% include "validaciones.html" %}
 </body>
 

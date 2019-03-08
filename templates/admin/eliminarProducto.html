@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <title>Admin | Nueva categoría</title>
+    <title>Eliminar Producto</title>
 </head>
 
 <body class="grey lighten-5">
@@ -24,7 +24,7 @@
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
                 <ul class="sidenav" id="mobile-demo">
-                    <li><a href="{% url 'usuarios:principalAdmin' %}">Volver a principal</a></li>
+                    <li><a href="{% url 'usuarios:principalAdmin' %}">Volver a principal</a></li>                    
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
             </div>
@@ -34,24 +34,17 @@
         <div class="container">
             <div class="row">
                 <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white cont">
-                    <h5 class="center-align">Nueva Categoría</h5>
+                    <h5 class="center-align">Eliminando a {{producto.nombre}}</h5>
                     <br>
+                    <h6 class="center-align">¿Estás seguro(a) de eliminar este producto?</h6>
+                    <p class="center-align">Su imagen también será eliminada*</p>
                     <form method="post">
                         {% csrf_token %}
-                        <div class="input-field">
-                            {{fRC.nombre}}
-                            <label for="id_nombre">Nombre</label>
-                        </div>
-                        <div class="input-field">
-                            {{fRC.clase}}
-                            <label for="id_clase">Clase css</label>
-                            <span>*esta clase será de referencia para los estilos css.</span>
-                        </div>
                         <div class="row">
-                            <div class="col l6 m6 s6">
-                                <button type="submit" class="btn btn-100 green">Guardar</button>
+                            <div class="col l6">
+                                <button class="btn btn-100 red" type="submit">Sí, eliminar</button>
                             </div>
-                            <div class="col l6 m6 s6">
+                            <div class="col l6">
                                 <a href="{% url 'usuarios:principalAdmin' %}" class="btn btn-100 grey">Cancelar</a>
                             </div>
                         </div>

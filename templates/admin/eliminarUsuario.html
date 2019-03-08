@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,25 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">    
     <title>Eliminar usuario</title>
-    <style>
-        nav {
-            height: 40px !important;
-            line-height: 40px !important;
-        }
-
-        .container {
-            margin-top: 100px;
-        }
-
-        .col {
-            padding: 20px 20px 0 20px !important;
-        }
-
-        .btn {
-            width: 100%;
-        }
-    </style>
 </head>
 
 <body class="grey lighten-5">
@@ -36,9 +20,11 @@
             <div class="nav-wrapper">
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'usuarios:principalAdmin' %}">Volver a principal</a></li>
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
                 <ul class="sidenav" id="mobile-demo">
+                    <li><a href="{% url 'usuarios:principalAdmin' %}">Volver a principal</a></li>                    
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
             </div>
@@ -47,18 +33,19 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white">
+                <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white cont">
                     <h5 class="center-align">Eliminando a {{usuario.first_name}}</h5>
                     <br>
                     <h6 class="center-align">¿Estás seguro(a) de eliminar este usuario?</h6>
+                    <br>
                     <form method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col l6">
-                                <button class="btn red" type="submit">Sí, eliminar</button>
+                                <button class="btn btn-100 red" type="submit">Sí, eliminar</button>
                             </div>
                             <div class="col l6">
-                                <a href="{% url 'usuarios:principalAdmin' %}" class="btn grey">Cancelar</a>
+                                <a href="{% url 'usuarios:principalAdmin' %}" class="btn btn-100 grey">Cancelar</a>
                             </div>
                         </div>
                     </form>

@@ -1,3 +1,4 @@
+// principalCliente
 function initSearch(){
     document.getElementById('next').addEventListener('click', function(){
         if(getChkCheked()){
@@ -8,10 +9,13 @@ function initSearch(){
                 showCancelButton: true,
                 //confirmButtonColor: '#3085d6',
                 //cancelButtonColor: '#d33',
-                confirmButtonText: 'Ir'
+                confirmButtonText: 'Ir',
+                cancelButtonText: 'Cancelar'
             }).then((result) => {
-                var form = document.getElementsByTagName('form')[0];
-                form.submit();
+                if(result.value){
+                    var form = document.getElementsByTagName('form')[0];
+                    form.submit();
+                }
             })
         }
         else{
@@ -22,8 +26,15 @@ function initSearch(){
             })
         }
     });
-    document.getElementById('search').addEventListener('input', function(){
+    var search = document.getElementById('search'); 
+    var radios = document.querySelectorAll("input[type='radio']");
+    search.addEventListener('input', function(){
         getProducts(this);
+    });
+    radios.forEach(element => {
+        element.addEventListener('click', function(){
+            getProducts(search);
+        });
     });
 }
 
@@ -35,22 +46,45 @@ function getChkCheked(){
     return false;
 }
 
+function getRadioCheked(){
+    var radios = document.querySelectorAll("input[type='radio']");
+    for (var i = 0; i < radios.length; i++) {
+        if(radios[i].checked){
+            return radios[i].id;
+        }
+    }
+}
+
 function getProducts(e){
     var texto = e.value.trim();
+    var preloader = document.getElementsByClassName('preloader-wrapper')[0];
+    var info = document.getElementById('info');
+    var categoria = getRadioCheked();
     if(texto){
         $.ajax({
             method: "POST",
             url: "ajax/producto",
-            data: {csrfmiddlewaretoken: getCSRFTokenValue(), texto : texto}
+            beforeSend : function(){
+                preloader.className += ' active';
+            },
+            data: {csrfmiddlewaretoken: getCSRFTokenValue(), texto : texto, categoria : categoria}
         }).done(function(productos){
+            preloader.classList.remove('active');
+            info.textContent = '';
             if (productos.length !== 0){
                 createListResults(productos);
+            }
+            else{
+                clean();
+                info.textContent = 'No hay resultados';
             }
         }).fail(function(){
             console.log('falló papá');
         });
     }
     else{
+        info.textContent = '';
+        preloader.classList.remove('active');
         clean();
     }
 }
@@ -97,6 +131,7 @@ function clean(){
     ul.setAttribute('data-display', 'hide');
 }
 
+// mostrarProductos
 function initCanvas(){
     document.getElementById('prueba').addEventListener('click', function(){
         document.getElementById('loader').style.display = 'flex';
@@ -107,10 +142,9 @@ function initCanvas(){
             element.firstElementChild.className = 'cont-img';
             html2canvas(element.firstElementChild).then(function(canvas){
                 var dataURL = canvas.toDataURL('image/jpeg', 0.95);
-                var canvas_url = dataURL.replace(/^data:image\/(png|jpeg);base64,/, "");
+                var canvas_url = dataURL.replace(/^data:image\/(jpeg);base64,/, "");
                 var img = zip.folder("imagenes");
                 var nombre = 'plantilla'+index+'.jpg';
-                console.log(nombre);
                 img.file(nombre,  canvas_url, {base64: true});
                 if(index==cont_img.length-1){
                     zip.generateAsync({type:"blob"})
@@ -126,44 +160,107 @@ function initCanvas(){
             document.body.style.overflowY = 'scroll';
         },5000);     
     });
-    var price_input = document.querySelectorAll(".precio");
-    var medida_input = document.querySelectorAll(".medida");
-    if(price_input){
-        price_input.forEach(element => {
-            element.addEventListener('input', function(){
-                drawText(this);
-            });
-        });
-    }
-    if(medida_input){
-        medida_input.forEach(element => {
-            element.addEventListener('input', function(){
-                drawText(this);
-            });
-        });
-    }
-}
-
-function drawText(e){
-    var id = e.getAttribute('data-id');
-    switch (e.getAttribute('class')){
-        case 'precio':
-            var text_precio = document.querySelector(".text-precio[data-id='"+id+"']");
-            if (e.value){
-                text_precio.textContent = '$' + e.value;
-            }
-            else{
-                text_precio.textContent = '';
-            }
-            return;
-        case 'medida':
-            var text_medida = document.querySelector(".text-medida[data-id='"+id+"']");
-            text_medida.textContent = e.value;
-            return;
-    }
 }
 
 function getCSRFTokenValue(){
     var token = $('input[name="csrfmiddlewaretoken"]').val();
     return token;
+}
+
+// principalAdmin
+function principalAdmin(){
+    $('#user-table').DataTable({ "lengthChange": false, "info": false });
+    $('#category-table').DataTable({ "lengthChange": false, "info": false });
+    $('#product-table').DataTable({ "lengthChange": false, "info": false });
+    $('.card-panel').on('click', function () {
+        $($(this).attr('data-target')).show().siblings('.tabla').hide();
+        $(this).children('i').addClass('active');
+        $(this).parent().siblings().children().children('i').removeClass('active');
+    });
+}
+
+// registroUsuario
+function registroUsuario(){
+    var select = document.querySelector('select');
+    var select_m = document.querySelector('#cont-select');
+    select_m.style.display = 'none';
+    var instances = M.FormSelect.init(select);
+    document.querySelector("input[type='checkbox']").addEventListener('click', function () {
+        if (this.checked) {
+            select_m.style.display = 'block';
+        }
+        else {
+            select_m.style.display = 'none';
+            select.selectedIndex = 0;
+        }
+    });
+}
+
+// registroProducto
+function registroProducto(){
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+    var img = document.getElementsByTagName('img')[0];
+    var color_input = document.getElementById('id_color');
+    color_input.value = '';
+    var file = document.getElementById('id_imagen');
+    var fileReader = new FileReader();
+    file.addEventListener('change', function (e) {
+        fileReader.readAsDataURL(e.target.files[0]);
+        fileReader.addEventListener('load', function () {
+            img.src = fileReader.result;
+            img.addEventListener('load', function () {
+                $(img).off('click');
+                $(img).broiler(function (color) {
+                    var hex = "#" + ((1 << 24) + (color.r << 16) + (color.g << 8) + color.b).toString(16).slice(1);
+                    color_input.value = hex;
+                    color_input.focus();
+                });
+            });
+        });
+    });
+}
+
+// editarProducto
+function editarProducto(){
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+    var img = document.getElementsByTagName('img')[0];
+    var color_input = document.getElementById('id_color');
+    var file = document.getElementById('id_imagen');
+    file.removeAttribute('required');
+    var fileReader = new FileReader();
+    $(img).off('click');
+    $(img).broiler(function (color) {
+        var hex = "#" + ((1 << 24) + (color.r << 16) + (color.g << 8) + color.b).toString(16).slice(1);
+        color_input.value = hex;
+        color_input.focus();
+    });
+    file.addEventListener('change', function (e) {
+        fileReader.readAsDataURL(e.target.files[0]);
+        fileReader.addEventListener('load', function () {
+            img.src = fileReader.result;
+            img.addEventListener('load', function () {
+                $(img).off('click');
+                $(img).broiler(function (color) {
+                    var hex = "#" + ((1 << 24) + (color.r << 16) + (color.g << 8) + color.b).toString(16).slice(1);
+                    color_input.value = hex;
+                    color_input.focus();
+                });
+            });
+        });
+    });
+}
+
+// editarUsuario
+function editarUsuario(){
+    var pass = document.getElementsByName('password')[0];
+    var select = document.querySelector('select');
+    var instances = M.FormSelect.init(select);
+    pass.removeAttribute('required')
+    pass.disabled = true;
+    document.getElementById('active-pass').addEventListener('click', function () {
+        pass.disabled = false;
+        pass.focus();
+    });
 }

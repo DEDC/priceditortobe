@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404
 from django.http.response import HttpResponseNotFound
+from django.contrib import messages
 from .forms import fRegistroUsuario
 from .models import User
 from apps.productos.models import Categorias, Productos 
@@ -16,12 +17,15 @@ def vLogin(request):
         if auth is not None:
             login(request, auth)
             if request.user.is_superuser:
+                messages.success(request, 'Bienvenido(a) '+request.user.get_full_name())
                 return redirect('usuarios:principalAdmin')
             elif not request.user.is_superuser:
+                messages.success(request, 'Bienvenido(a) '+request.user.get_full_name())
                 return redirect('usuarios:principalCliente')
             else: 
                 return redirect('login')
         else:
+            messages.error(request, 'Usuario o contraseña no válidos')
             return redirect('login')
     return render(request, 'login.html')
 
@@ -52,10 +56,10 @@ def vRegistroUsuario(request):
         if fRU.is_valid():
             usuario = fRU.save(commit = False)
             if not request.POST.__contains__('is_cliente'):
-                print('yeaaaa')
                 usuario.is_staff = True
             usuario.set_password(usuario.password)
             usuario.save()
+            messages.success(request, 'Usuario agregado exitosamente')
             return redirect('usuarios:principalAdmin')
     else:
         fRU = fRegistroUsuario()
@@ -73,6 +77,7 @@ def vEditarUsuario(request, id):
                 f = form.save(commit=False)
                 f.set_password(f.password)
                 f.save()
+                messages.success(request, 'Cambios guardados exitosamente')
                 return redirect('usuarios:principalAdmin')
         else:
             r_copy = request.POST.copy()
@@ -80,7 +85,8 @@ def vEditarUsuario(request, id):
             form = fRegistroUsuario(r_copy, instance=usuario)    
             if form.is_valid():
                 f = form.save(commit=False)
-                f.save(update_fields = ['first_name', 'last_name', 'username', 'email'])
+                f.save(update_fields = ['first_name', 'last_name', 'username', 'email', 'categoria'])
+                messages.success(request, 'Cambios guardados exitosamente')
                 return redirect('usuarios:principalAdmin')
     else:
         form = fRegistroUsuario(instance = usuario)
@@ -93,10 +99,12 @@ def vEliminarUsuario(request, id):
     usuario = get_object_or_404(User, pk = id)
     if request.method == 'POST':
         usuario.delete()
+        messages.success(request, 'Usuario eliminado exitosamente')
         return redirect('usuarios:principalAdmin')
     context = {'usuario' : usuario}
     return render(request, 'admin/eliminarUsuario.html', context)    
 
 @login_required(login_url = '/')
 def vPrincipalCliente(request):
-    return render(request, 'cliente/principalCliente.html')
+    categorias = Categorias.objects.all()
+    return render(request, 'cliente/principalCliente.html', {'categorias' : categorias})

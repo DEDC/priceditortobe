@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,25 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>Editar usuario</title>
-    <style>
-        nav {
-            height: 40px !important;
-            line-height: 40px !important;
-        }
-
-        .container {
-            margin-top: 100px;
-        }
-
-        .cont-edit {
-            padding: 20px 20px 0 20px !important;
-        }
-
-        .btn {
-            width: 100%;
-        }
-    </style>
 </head>
 
 <body class="grey lighten-5">
@@ -36,9 +20,11 @@
             <div class="nav-wrapper">
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="{% url 'usuarios:principalAdmin' %}">Volver a principal</a></li>
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
                 <ul class="sidenav" id="mobile-demo">
+                    <li><a href="{% url 'usuarios:principalAdmin' %}">Volver a principal</a></li>
                     <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
                 </ul>
             </div>
@@ -47,7 +33,7 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white cont-edit">
+                <div class="col l6 offset-l3 m8 offset-m2 s12 z-depth-2 white cont">
                     <h5 class="center-align">Editando a {{usuario.first_name}}</h5>
                     <br>
                     <form method="post">
@@ -68,6 +54,13 @@
                                 <label for="id_email">Correo</label>
                             </div>
                         </div>
+                        {% if not usuario.is_staff %}
+                        <div class="row">
+                            <div class="col l12 input-field" id="cont-select">
+                                {{form.categoria}}
+                            </div>
+                        </div>
+                        {% endif %}
                         <div class="row">
                             <div class="input-field col l6 m6 s12">
                                 {{form.username}}
@@ -75,16 +68,16 @@
                             </div>
                             <div class="input-field col l6 m6 s12">
                                 {{form.password}}
-                                <label for="id_password">Contraseña</label>
                                 <a href="#" class="right" id="active-pass">Modificar contraseña</a>
+                                <label for="id_password">Contraseña</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col l6 m6 s6">
-                                <button type="submit" class="btn blue">Editar</button>
+                                <button type="submit" class="btn btn-100 blue">Editar</button>
                             </div>
                             <div class="col l6 m6 s6">
-                                <a href="{% url 'usuarios:principalAdmin' %}" class="btn grey">Cancelar</a>
+                                <a href="{% url 'usuarios:principalAdmin' %}" class="btn btn-100 grey">Cancelar</a>
                             </div>
                         </div>
                     </form>
@@ -93,15 +86,10 @@
         </div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var pass = document.getElementsByName('password')[0];
-            pass.removeAttribute('required')
-            pass.disabled = true;
-            document.getElementById('active-pass').addEventListener('click', function () {
-                pass.disabled = false;
-                pass.focus();
-            });
+            editarUsuario();
         });
     </script>
 </body>

@@ -11,51 +11,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>Administración</title>
-    <style>
-        nav {
-            height: 40px !important;
-            line-height: 40px !important;
-        }
-
-        .card-panel i {
-            color: #e0e0e0;
-        }
-
-        .card-panel {
-            cursor: pointer;
-        }
-
-        a.sidenav-trigger {
-            height: 40px !important;
-            line-height: 40px !important;
-        }
-
-        a.sidenav-trigger i {
-            height: 40px !important;
-            line-height: 40px !important;
-        }
-
-        .row:nth-child(1) {
-            margin-top: 40px;
-            padding: 30px;
-        }
-
-        .row:nth-child(2),
-        .row:nth-child(3),
-        .row:nth-child(4) {
-            padding: 0 120px 50px 120px;
-            margin-top: 60px;
-        }
-
-        div.tabla {
-            display: none;
-        }
-
-        i.active {
-            color: #9e9e9e
-        }
-    </style>
 </head>
 
 <body class="grey lighten-5">
@@ -73,7 +30,7 @@
         </nav>
     </header>
     <main>
-        <div class="row animated fadeIn">
+        <div class="row animated fadeIn" id="cont-card-panel">
             <div class="col l4 m6 s12">
                 <div class="card-panel hoverable" data-target="#cont-user-table">
                     <i class="fas fa-users fa-3x right"></i>
@@ -189,8 +146,10 @@
                             <td>{{producto.categoria.nombre}}</td>
                             <td>{{producto.imagen.imagen}}</td>
                             <td>
-                                <a href="" class="btn blue"><i class="far fa-edit"></i></a>
-                                <a href="" class="btn red"><i class="far fa-trash-alt"></i></a>
+                                <a href="{% url 'usuarios:editarProducto' producto.id %}" class="btn blue"><i
+                                        class="far fa-edit"></i></a>
+                                <a href="{% url 'usuarios:eliminarProducto' producto.imagen.id %}" class="btn red"><i
+                                        class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -200,19 +159,14 @@
         </div>
     </main>
     <script src="{% static 'js/jq.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            $('#user-table').DataTable({ "lengthChange": false, "info": false });
-            $('#category-table').DataTable({ "lengthChange": false, "info": false });
-            $('#product-table').DataTable({ "lengthChange": false, "info": false });
-            $('.card-panel').on('click', function () {
-                $($(this).attr('data-target')).show().siblings('.tabla').hide();
-                $(this).children('i').addClass('active');
-                $(this).parent().siblings().children().children('i').removeClass('active');
-            });
+            principalAdmin();
         });
     </script>
+    {% include "validaciones.html" %}
 </body>
 
 </html>
