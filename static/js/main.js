@@ -137,19 +137,23 @@ function initCanvas(){
         document.getElementById('loader').style.display = 'flex';
         document.body.style.overflow = 'hidden';
         var cont_img = document.querySelectorAll('.cont-canvas');
+        var date = new Date();
         var zip = new JSZip();
+        var filename = 'plantillas '+date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear()+' '+date.getHours()+'-'+date.getMinutes()+'-'+date.getSeconds() 
         cont_img.forEach((element, index) => {
+            var imgname = element.querySelector('img').src;
+            imgname = imgname.slice(imgname.lastIndexOf('/')+1,imgname.lastIndexOf('.'));
             element.firstElementChild.className = 'cont-img';
             html2canvas(element.firstElementChild).then(function(canvas){
                 var dataURL = canvas.toDataURL('image/jpeg', 0.95);
                 var canvas_url = dataURL.replace(/^data:image\/(jpeg);base64,/, "");
                 var img = zip.folder("imagenes");
-                var nombre = 'plantilla'+index+'.jpg';
+                var nombre = imgname+'-'+index+'.jpg';
                 img.file(nombre,  canvas_url, {base64: true});
                 if(index==cont_img.length-1){
                     zip.generateAsync({type:"blob"})
                     .then(function(content) {
-                        saveAs(content, "example.zip");
+                        saveAs(content, filename);
                     });
                 }
             });

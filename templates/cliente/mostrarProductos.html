@@ -95,8 +95,8 @@
                 <div class="col l8 s12 cont-canvas">
                     <div class="preview-cont-img">
                         <div class="cont-text preview-text" data-id="{{forloop.counter}}" style="color:{{p.color}}">
-                            <span class="text-precio" data-id="{{forloop.counter}}">25.</span>
-                            <span class="text-medida" data-id="{{forloop.counter}}">kg</span>
+                            <span class="text-precio" data-id="{{forloop.counter}}"></span>
+                            <span class="text-medida" data-id="{{forloop.counter}}"></span>
                         </div>
                         <img src="{% get_static_prefix %}images/{{p.imagen.imagen}}" class="responsive-img">
                     </div>
@@ -114,6 +114,7 @@
                     </div>
                 </div>
             </div>
+            <br>
             {% endfor %}
             <button id="prueba" class="btn right"><i class="fas fa-file-download left"></i>Descargar imágenes</button>
         </div>
@@ -132,6 +133,7 @@
             initCanvas();
             type_1();
             type_2();
+            type_3();
         };
     </script>
 </body>
