@@ -36,6 +36,13 @@ function initSearch(){
             getProducts(search);
         });
     });
+    document.getElementById('select-all').addEventListener('click', function(){
+        var ul = document.getElementsByClassName('collection')[0];    
+        var li = ul.querySelectorAll('input');
+        for(var i = 0; i < li.length; i++){
+            li[i].click();
+        }
+    });
 }
 
 function getChkCheked(){

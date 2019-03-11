@@ -101,7 +101,10 @@ def getProductos(request):
         if not categoria:
             productos = serializers.serialize('json', Productos.objects.filter(nombre__istartswith = texto), fields = ('nombre'))
         else:
-            productos = serializers.serialize('json', Productos.objects.filter(nombre__istartswith = texto, categoria__exact = categoria), fields = ('nombre'))
+            if texto == '*':
+                productos = serializers.serialize('json', Productos.objects.filter(categoria__exact = categoria), fields = ('nombre'))
+            else:        
+                productos = serializers.serialize('json', Productos.objects.filter(nombre__istartswith = texto, categoria__exact = categoria), fields = ('nombre'))
         return HttpResponse(productos, content_type = 'application/json')
     else:
         return redirect('login')
