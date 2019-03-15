@@ -36,13 +36,6 @@ function initSearch(){
             getProducts(search);
         });
     });
-    document.getElementById('select-all').addEventListener('click', function(){
-        var ul = document.getElementsByClassName('collection')[0];    
-        var li = ul.querySelectorAll('input');
-        for(var i = 0; i < li.length; i++){
-            li[i].click();
-        }
-    });
 }
 
 function getChkCheked(){
@@ -146,7 +139,7 @@ function initCanvas(){
         var cont_img = document.querySelectorAll('.cont-canvas');
         var date = new Date();
         var zip = new JSZip();
-        var filename = 'plantillas '+date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear()+' '+date.getHours()+'-'+date.getMinutes()+'-'+date.getSeconds() 
+        var filename = 'MMChedraui '+date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear()+'.zip' 
         cont_img.forEach((element, index) => {
             var imgname = element.querySelector('img').src;
             imgname = imgname.slice(imgname.lastIndexOf('/')+1,imgname.lastIndexOf('.'));
@@ -155,7 +148,7 @@ function initCanvas(){
                 var dataURL = canvas.toDataURL('image/jpeg', 0.95);
                 var canvas_url = dataURL.replace(/^data:image\/(jpeg);base64,/, "");
                 var img = zip.folder("imagenes");
-                var nombre = imgname+'-'+index+'.jpg';
+                var nombre = imgname+'-'+(index+1)+'.jpg';
                 img.file(nombre,  canvas_url, {base64: true});
                 if(index==cont_img.length-1){
                     zip.generateAsync({type:"blob"})
@@ -209,7 +202,7 @@ function registroUsuario(){
 
 // registroProducto
 function registroProducto(){
-    var elems = document.querySelectorAll('select');
+    var elems = document.querySelector('select');
     var instances = M.FormSelect.init(elems);
     var img = document.getElementsByTagName('img')[0];
     var color_input = document.getElementById('id_color');

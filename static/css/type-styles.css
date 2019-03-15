@@ -5,13 +5,14 @@
 }
 @font-face{
     font-family: 'DIN_Condensed_Bold';
-    src: url(fonts/DIN_Condensed_Bold.ttf);
+    src: url(fonts/prueba.woff);
 }
 
 /* Type-1 css styles */
 .type-1 > .cont-canvas > .cont-img{
     width: 1200px;
     height: 1200px;
+    font-family: 'Montserrat', sans-serif;
 }
 .type-1 > .cont-canvas > .cont-img > .cont-text{
     position: absolute;
@@ -24,15 +25,11 @@
     color: white;
 }
 .type-1 > .cont-canvas > .cont-img .cont-text  .text-precio{     
-    font-style: normal;
     font-weight: 900;
-    font-family: 'Montserrat', sans-serif;
     font-size: 81px;
 }
 .type-1 > .cont-canvas > .cont-img > .cont-text > .text-medida{     
-    font-style: normal;
     font-weight: 900;
-    font-family: 'Montserrat', sans-serif;
     font-size: 43px;
 }
 /* End styles type-1 */
@@ -41,6 +38,7 @@
 .type-1 > .cont-canvas > .preview-cont-img{
     position: relative;
     width: 100%;
+    font-family: 'Montserrat', sans-serif;
 }
 .type-1 > .cont-canvas > .preview-cont-img > .preview-text{
     position: absolute;
@@ -53,15 +51,11 @@
     color: white;
 }
 .type-1 > .cont-canvas > .preview-cont-img > .preview-text > .text-precio{
-    font-style: normal;
     font-weight: 900;
-    font-family: 'Montserrat', sans-serif;
     font-size: 5vmin;
 }
 .type-1 > .cont-canvas > .preview-cont-img > .preview-text > .text-medida{
-    font-style: normal;
     font-weight: 800;
-    font-family: 'Montserrat', sans-serif;
     font-size: 3vmin;
 }
 /* End styles type-1 preview */
@@ -70,6 +64,7 @@
 .type-2 > .cont-canvas > .cont-img{
     width: 1200px;
     height: 1200px;
+    font-family: 'DIN_Condensed_Bold', sans-serif;
 }
 .type-2 > .cont-canvas > .cont-img > .cont-text{
     position: absolute;
@@ -86,28 +81,22 @@
     height: inherit;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .type-2 > .cont-canvas > .cont-img > .cont-text > .text-precio{     
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 120px;
 }
 .type-2 > .cont-canvas > .cont-img > .cont-text > .text-signo{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 89.8px;
 }
 .type-2 > .cont-canvas > .cont-img > .cont-text > .cont-column > .text-centavos{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
+    height: 50%;
     font-size: 70px;
 }
 .type-2 > .cont-canvas > .cont-img > .cont-text > .cont-column > .text-medida{     
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
+    height: 50%;
     font-size: 40px;
-    margin-top: -35px;
-    margin-left: 13px;
 }
 /* End styles type-2 */
 
@@ -115,6 +104,7 @@
 .type-2 > .cont-canvas > .preview-cont-img{
     position: relative;
     width: 100%;
+    font-family: 'DIN_Condensed_Bold', sans-serif;
 }
 .type-2 > .cont-canvas > .preview-cont-img > .preview-text{
     position: absolute;
@@ -131,26 +121,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
-.type-2 > .cont-canvas > .preview-cont-img > .preview-text > .text-precio{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
+.type-2 > .cont-canvas > .preview-cont-img > .preview-text > .text-precio{    
     font-size: 7vmin;
 }
 .type-2 > .cont-canvas > .preview-cont-img > .preview-text > .text-signo{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 6vmin;
 }
 .type-2 > .cont-canvas > .preview-cont-img > .preview-text > .cont-column > .text-centavos{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 4vmin;
     margin-bottom: 10%
 }
 .type-2 > .cont-canvas > .preview-cont-img > .preview-text > .cont-column > .text-medida{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 3vmin;
     margin-top: -80%;
 }
@@ -160,6 +143,7 @@
 .type-3 > .cont-canvas > .cont-img{
     width: 1200px;
     height: 1200px;
+    font-family: 'DIN_Condensed_Bold', sans-serif;
 }
 .type-3 > .cont-canvas > .cont-img > .cont-text{
     position: absolute;
@@ -176,28 +160,22 @@
     height: inherit;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .type-3 > .cont-canvas > .cont-img > .cont-text > .text-precio{     
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 120px;
 }
 .type-3 > .cont-canvas > .cont-img > .cont-text > .text-signo{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 89.8px;
 }
 .type-3 > .cont-canvas > .cont-img > .cont-text > .cont-column > .text-centavos{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
+    height: 50%;
     font-size: 70px;
 }
 .type-3 > .cont-canvas > .cont-img > .cont-text > .cont-column > .text-medida{     
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
+    height: 50%;
     font-size: 40px;
-    margin-top: -35px;
-    margin-left: 13px;
 }
 /* End styles type-3 */
 
@@ -205,6 +183,7 @@
 .type-3 > .cont-canvas > .preview-cont-img{
     position: relative;
     width: 100%;
+    font-family: 'DIN_Condensed_Bold', sans-serif;
 }
 .type-3 > .cont-canvas > .preview-cont-img > .preview-text{
     position: absolute;
@@ -212,7 +191,7 @@
     height: 12%;
     margin-top: 17%;
     margin-left: 7.1%;
-    display: flex;
+	display: flex;
     justify-content: center;
     align-items: center;
     color: white;
@@ -221,26 +200,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 .type-3 > .cont-canvas > .preview-cont-img > .preview-text > .text-precio{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 7vmin;
 }
 .type-3 > .cont-canvas > .preview-cont-img > .preview-text > .text-signo{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 6vmin;
 }
 .type-3 > .cont-canvas > .preview-cont-img > .preview-text > .cont-column > .text-centavos{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 4vmin;
     margin-bottom: 10%
 }
 .type-3 > .cont-canvas > .preview-cont-img > .preview-text > .cont-column > .text-medida{
-    font-style: normal;
-    font-family: 'DIN_Condensed_Bold', sans-serif;
     font-size: 3vmin;
     margin-top: -80%;
 }

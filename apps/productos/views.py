@@ -4,6 +4,7 @@ from django.core import serializers
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404
+import os 
 from .forms import fRegistroCategoria, fRegistroProducto, fRegistroImagen
 from .models import Productos, Categorias, Imagenes
 from apps.usuarios.views import is_staff_check
@@ -56,6 +57,7 @@ def vRegistroProducto(request):
             producto = fRP.save(commit = False)
             producto.imagen = fRI.save()
             producto.save()
+            messages.success(request, 'Producto agregado exitosamente')
             return redirect('usuarios:registroProducto')
     else:
         fRP = fRegistroProducto()
@@ -68,11 +70,13 @@ def vRegistroProducto(request):
 def vEditarProducto(request, id):
     producto = get_object_or_404(Productos, pk = id)
     imagen = get_object_or_404(Imagenes, pk = producto.imagen.id)
+    old_img = imagen.imagen.path
     if request.method == 'POST':
         form = fRegistroProducto(request.POST, instance = producto)
         formI = fRegistroImagen(request.POST, request.FILES, instance = imagen)
         if request.FILES:
             if formI.is_valid():
+                eliminarImagen(old_img)
                 formI.save()
         if form.is_valid():
             formI.save()
@@ -88,11 +92,17 @@ def vEliminarProducto(request, id):
     imagen = get_object_or_404(Imagenes, pk = id)
     producto = get_object_or_404(Productos, imagen = id)
     if request.method == 'POST':
+        eliminarImagen(imagen.imagen.path)
         imagen.delete()
         messages.success(request, 'Producto eliminado exitosamente')
         return redirect('usuarios:principalAdmin')
     context = {'producto' : producto}
     return render(request, 'admin/eliminarProducto.html', context)
+
+def eliminarImagen(path):
+    print(path)
+    if os.path.isfile(path):
+        os.remove(path)
 
 def getProductos(request):
     if request.is_ajax():
