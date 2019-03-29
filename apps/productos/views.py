@@ -79,7 +79,7 @@ def vEditarProducto(request, id):
                 eliminarImagen(old_img)
                 formI.save()
         if form.is_valid():
-            formI.save()
+            form.save()
             messages.success(request, 'Cambios guardados exitosamente')
             return redirect('usuarios:principalAdmin')
     else:
@@ -109,12 +109,12 @@ def getProductos(request):
         texto = request.POST.get('texto')
         categoria = request.POST.get('categoria')
         if not categoria:
-            productos = serializers.serialize('json', Productos.objects.filter(nombre__istartswith = texto), fields = ('nombre'))
+            productos = serializers.serialize('json', Productos.objects.filter(nombre__icontains = texto), fields = ('nombre'))
         else:
             if texto == '*':
                 productos = serializers.serialize('json', Productos.objects.filter(categoria__exact = categoria), fields = ('nombre'))
             else:        
-                productos = serializers.serialize('json', Productos.objects.filter(nombre__istartswith = texto, categoria__exact = categoria), fields = ('nombre'))
+                productos = serializers.serialize('json', Productos.objects.filter(nombre__icontains = texto, categoria__exact = categoria), fields = ('nombre'))
         return HttpResponse(productos, content_type = 'application/json')
     else:
         return redirect('login')

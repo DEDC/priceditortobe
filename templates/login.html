@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -25,6 +26,12 @@
         .col {
             padding: 20px !important;
         }
+
+        img{
+            -webkit-filter: opacity(.1);
+            filter: opacity(.1);
+            animation-delay: .5s;
+        }
     </style>
 </head>
 
@@ -50,6 +57,11 @@
                             <input type="submit" class="btn center-align animated fadeIn" value="Ingresar">
                         </div>
                     </form>
+                </div>
+            </div>
+            <div id="cont-logo" class="row center-align">
+                <div class="col l4 offset-l4 m8 offset-m2 s12">
+                    <img src="{% static 'images/logo.png' %}" alt="" class="responsive-img animated fadeIn">
                 </div>
             </div>
         </div>
