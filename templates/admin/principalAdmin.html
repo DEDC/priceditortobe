@@ -32,6 +32,10 @@
             padding: 0;
             background-color: rgba(0, 0, 0, .8);
         }
+
+        .table-responsive {
+            overflow-x: scroll;
+        }
     </style>
 </head>
 
@@ -74,7 +78,7 @@
             </div>
         </div>
         <div class="row tabla" id="cont-user-table">
-            <div class="col l12 m12 s12">
+            <div class="col l12 m12 s12 table-responsive">
                 <!-- tabla usuarios -->
                 <h6 class="center-align">Usuarios</h6>
                 <a href="{% url 'usuarios:registroUsuario' %}" class="btn green"><i class="fas fa-plus"></i></a>
@@ -119,7 +123,7 @@
         </div>
         <div class="row tabla" id="cont-category-table">
             <!-- tabla categorias -->
-            <div class="col l12 m12 s12">
+            <div class="col l12 m12 s12 table-responsive">
                 <h6 class="center-align">Categorias</h6>
                 <a href="{% url 'usuarios:registroCategoria' %}" class="btn green"><i class="fas fa-plus"></i></a>
                 <table id="category-table" class="display">
@@ -147,7 +151,7 @@
         </div>
         <div class="row tabla" id="cont-product-table">
             <!-- tabla productos -->
-            <div class="col l12 m12 s12">
+            <div class="col l12 m12 s12 table-responsive">
                 <h6 class="center-align">Productos</h6>
                 <a href="{% url 'usuarios:registroProducto' %}" class="btn green"><i class="fas fa-plus"></i></a>
                 <table id="product-table" class="display">
@@ -187,17 +191,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         principalAdmin();
-        var modal = new tingle.modal({
-            footer: false,
-            stickyFooter: false,
-            closeMethods: ['overlay', 'button', 'escape'],
-            closeLabel: "Close"
-        });
-        $('#product-table tbody tr .show-img a').on('click', function (e) {
-            e.preventDefault();
-            modal.open();
-            modal.setContent('<img src="/static/images/' + $(this).text() + '" class="responsive-img">');
-        });
     });
 </script>
 

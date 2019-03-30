@@ -181,6 +181,24 @@ function principalAdmin(){
         $(this).children('i').addClass('active');
         $(this).parent().siblings().children().children('i').removeClass('active');
     });
+    var modal = new tingle.modal({
+        footer: false,
+        stickyFooter: false,
+        closeMethods: ['overlay', 'button', 'escape'],
+        closeLabel: "Close"
+    });
+    $('#product-table tbody tr .show-img a').on('click', function (e) {
+            e.preventDefault();
+            modal.open();
+            modal.setContent('<img src="/static/images/' + $(this).text() + '" class="responsive-img">');
+        });
+    $('#product-table').on( 'draw.dt', function () {
+        $('#product-table tbody tr .show-img a').on('click', function (e) {
+            e.preventDefault();
+            modal.open();
+            modal.setContent('<img src="/static/images/' + $(this).text() + '" class="responsive-img">');
+        });
+    });
 }
 
 // registroUsuario
