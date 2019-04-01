@@ -86,9 +86,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://unpkg.com/huebee@1/dist/huebee.pkgd.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        window.onload = function () {
             editarProducto();
-        });
+        };
     </script>
     {% include "validaciones.html" %}
 </body>
