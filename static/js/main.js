@@ -173,9 +173,42 @@ function getCSRFTokenValue(){
 
 // principalAdmin
 function principalAdmin(){
-    $('#user-table').DataTable({ "lengthChange": false, "info": false });
-    $('#category-table').DataTable({ "lengthChange": false, "info": false });
-    $('#product-table').DataTable({ "lengthChange": false, "info": false });
+    $('#user-table').DataTable({ 
+        "lengthChange": false, 
+        "info": false,
+        "language": {
+            "paginate": {
+                "next":       "Siguiente",
+                "previous":   "Anterior"
+            },
+            "zeroRecords": "Sin resultados",
+            "search" : "BUSCAR :"
+        } 
+    });
+    $('#category-table').DataTable({ 
+        "lengthChange": false, 
+        "info": false,
+        "language": {
+            "paginate": {
+                "next":       "Siguiente",
+                "previous":   "Anterior"
+            },
+            "zeroRecords": "Sin resultados",
+            "search" : "BUSCAR :"
+        }
+    });
+    $('#product-table').DataTable({ 
+        "lengthChange": false, 
+        "info": false, 
+        "language": {
+            "paginate": {
+                "next":       "Siguiente",
+                "previous":   "Anterior"
+            },
+            "zeroRecords": "Sin resultados",
+            "search" : "BUSCAR :"
+        }
+    });
     $('.card-panel').on('click', function () {
         $($(this).attr('data-target')).show().siblings('.tabla').hide();
         $(this).children('i').addClass('active');
